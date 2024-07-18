@@ -1,10 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1>My first PHP page</h1>
+<!--html 주석-->
+
 <?php
-// XAMPP
-// 웹서버, DB 서버, PHP
-// Apache, MariaDB, PHP 컴파일러
-// http://php.net/manual/en/install.php
+// 한줄
+# 주석
+/* 주석
+*/
+    echo "Hello World!";
+?>
 
-// 얘는 포트변경해서 나옴(전부 페이지 / 해서 설정해줘야지 확인가능함) : http://localhost/1.php
 
-$txt = "PHP";
-echo "I love $txt !";
+</body>
+</html>
+
