@@ -6,16 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    
-<h1>My first PHP page</h1>
-<!--html 주석-->
 
 <?php
-// 한줄
-# 주석
-/* 주석
-*/
-    echo "Hello World!";
+// 넣어지는 값에 따라서 형태 생기기 때문에 앞에 변수 표현값 없다!
+$txt = "안녕하세요";    // 문자열
+$x = 5;              // 정수
+$y = 10.5;           // 실수
+
+// 변수는 대,소문자를 구분한다!
+echo "x = $x = $x, X=$X";
+$aaaA = "";
+$aaaa = "";
+
 ?>
 
 
