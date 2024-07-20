@@ -13,8 +13,12 @@
 
 define("GREETING", "2.안녕하세요");
 
-// GREETING = "DDD";            // 값을 대입하면 에러 발생!(상수는 변하지 않는 값이므로 또다른 값을 대입할 수 없다.)
+
+// 1),2) 값을 대입하면 에러 발생!(상수는 변하지 않는 값이므로 또다른 값을 대입할 수 없다.)
+// GREETING = "DDD";            // 1) parce error(아예 실행 안함) 
 
 echo GREETING;
+
+// define("GREETING", "우하하");        // 2) notice error(큰 에러는 아니지만 에러 노티스 해줌)
 
 ?>
