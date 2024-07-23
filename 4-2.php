@@ -43,5 +43,6 @@ foreach($arr AS $key => $val) {
     echo "<h3>$arr[$key]</h3>";
 }
 
+// >> 각각 val, key 값으로 사이즈 변경되서 출력됨
 
 ?>
