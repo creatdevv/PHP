@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>폼전송</title>
+<style>
+    textarea[name="content"] {
+        width:  400px;
+        height: 300px;
+    }
+</style>
+
+</head>
+<body>
+    <form method="post" name="form1" action="form_action.php" autocomplete="off">
+    글제목 :
+    <input type="text" name="subjecgt" > <br>
+    암호 :
+    <input type="password" name="password"><br>
+    글내용 :
+    <textarea name="content"></textarea>
+    <button type="button" id="submit_btn">전송</button>
+</form>
+
+<script>
+ const submit_btn = document.getElementById('submit_btn');
+ submit_btn.addEventListener('click', function(){
+    f = document.form1;
+    if(f.subject.value == '') {
+        alert('제목을 입력해 주세요.');
+        f.subject.focus();
+        return;
+    }
+    if(f.password.value == '') {
+        alert('비밀번호를 입력해 주세요.');
+        f.password.focus();
+        return;
+    }
+    if(f.content.value == '') {
+        alert('내용을 입력해 주세요.');
+        f.content.focus();
+        return;
+    }
+
+    document.form1.submit();
+ });
+</script>
+
+
+</body>
+</html>
