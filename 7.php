@@ -32,6 +32,16 @@ $pattern = '/^\$12/';      // '\/' 앞에 있는거 찾아준다.
 $pattern = '/\$$/';      // $찾기
 
 
+// * any . : . 개수만큼 문자열 선택되고, replacement의 문자열로 개수만큼 대체되고 나머지 문자 나열됨
+// * [] : 브라켓, 브라켓 안에 있는 글자 사이 문자열은 다 찾아냄(중복 브라켓 가능)
+$string = "Regualr expressions4";   // target string
+$pattern = '/...../';       // 1개의 문자씩 대체
+$pattern = '^R.q/';       // R로 시작되고, 1문자씩 대체
+
+$string = "How do you do?";     // target string
+$pattern = '/[oyu][yow]/';
+
+
 
 echo "<h3>before:</h3>";
 echo $string;
@@ -42,7 +52,8 @@ echo "<h3>after:</h3>";
 
 // replace 변경할것임~!! 마지막 $찾기 부분이 여기있네 로 변경됨
 // $replacement = "!!";
-$replacement = "<span>여기있네</span>";
+// $replacement = "<span>여기있네</span>";
+$replacement = "<span>=</span>";
 
 echo preg_replace($pattern, $replacement, $string);
 
