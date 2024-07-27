@@ -42,7 +42,16 @@ $string = "How do you do?";     // target string
 $pattern = '/[oyu][yow]/';
 
 
+// - 하이픈     : 연결함 [시작 - 끝]
 
+$string = "ABCDEFGHIJKLMNabcdefghijklmnopqrstuvwxyz0123456789";     // target string
+// $pattern = '//';
+$pattern = '/[b-z]/';
+
+
+
+
+//=======================================================================
 echo "<h3>before:</h3>";
 echo $string;
 
