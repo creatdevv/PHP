@@ -48,8 +48,19 @@ $string = "ABCDEFGHIJKLMNabcdefghijklmnopqrstuvwxyz0123456789";     // target st
 // $pattern = '//';
 $pattern = '/[b-z]/';
 
+// [^문자] : Not 의 의미 [문자가 아닌]
+// cf. ^ : ~로 시작하는 의미 
+
+$string = "ABCDEFGabcdefg12345";     // target string
+$pattern = '/[^C]/';                // C빼고 다 바뀌어서 출력됨
+$pattern = '/[^C0-9]/';                // C, 숫자들 빼고 다 바뀌어서 출력됨
 
 
+// 서브패턴 (|) 버티컬 바
+$string = "Monday Tuesday Friday";        // target string
+$pattern = '/(on|use|rida)/';          // M!day Tuesday F!y 출력
+$pattern = '/(Mon|Tue|Fri)day/';       // ! Tuesday ! 출력
+$pattern = '/..(id|esd|nd)ay/';        // ! ! ! 출력
 
 //=======================================================================
 echo "<h3>before:</h3>";
@@ -62,7 +73,8 @@ echo "<h3>after:</h3>";
 // replace 변경할것임~!! 마지막 $찾기 부분이 여기있네 로 변경됨
 // $replacement = "!!";
 // $replacement = "<span>여기있네</span>";
-$replacement = "<span>=</span>";
+// $replacement = "<span>=</span>";
+$replacement = "<span>!</span>";
 
 echo preg_replace($pattern, $replacement, $string);
 
