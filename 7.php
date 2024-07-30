@@ -38,7 +38,7 @@ $string = "Regualr expressions4";   // target string
 $pattern = '/...../';       // 1개의 문자씩 대체
 $pattern = '^R.q/';       // R로 시작되고, 1문자씩 대체
 
-$string = "How do you do?";     // target string
+$string = "How do you do?";     // target stringㅎ
 $pattern = '/[oyu][yow]/';
 
 
@@ -62,7 +62,9 @@ $pattern = '/(on|use|rida)/';          // M!day Tuesday F!y 출력
 $pattern = '/(Mon|Tue|Fri)day/';       // ! Tuesday ! 출력
 $pattern = '/..(id|esd|nd)ay/';        // ! ! ! 출력
 
-//=======================================================================
+
+
+//================================================================================
 echo "<h3>before:</h3>";
 echo $string;
 
