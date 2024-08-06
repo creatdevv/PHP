@@ -9,10 +9,14 @@ while (( $file_name = $d ->read()) !== false) {
     if($file_name == '.'  or $file_name=='..'){
         continue;
     }
+
     // echo $file_name . "<br>";
-    // echo '<img src="upload/'.$file_name.'" width="100">';        // 이미지 업로드(방법들)
+
+    // 이미지를 HTML로 출력
+    // echo '<img src="upload/'.$file_name.'" width="100">';        // 이미지 업로드(3가지 방법)
     // echo"<img src='upload/{$file_name}' width='100>";
-    ?><img src='upload/<?php  echo $file_name; ?>'width='100>
+    ?>
+    <img src='upload/<?php echo $file_name; ?>' width='100'><br>
     <?php
 }
 
