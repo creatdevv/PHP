@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Gallery</title>
+</head>
+<body>
 <?php
 // # 디렉토리(폴더) 파일 불러오기: dir() 함수 사용법
 
@@ -33,3 +40,5 @@ while (( $file_name = $d ->read()) !== false) {
 
 // http://localhost/file_gallery/dir.php
 ?>
+</body>
+</html>
