@@ -6,6 +6,16 @@ include 'menu.html';
 if (isset($_FILES['photo'])) {
 
     // 파일 정보 가져오기
+    $file_name = $_FILES['photo']['name']; {
+    echo "
+    <script>
+        alert('파일을 선택하지 않으셨습니다.');
+        self.location.href='./gallery_upload_form.php';
+    </script>
+    ";
+    exit;
+    }
+
     $file_name = $_FILES['photo']['name'];
     $arr = explode('.', $file_name);    // 파일명과 확장자 분리
     $ext = end($arr);       // 확장자 추출
