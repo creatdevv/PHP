@@ -27,17 +27,14 @@ if (isset($_FILES['photo'])) {
     // 이미지 파일인지 확인
     if ($ext == 'jpg' || $ext == 'png' || $ext == 'PNG' || $ext == 'JPG') {
         
-        // 업로드 디렉터리 확인 및 생성
-        $upload_dir = './upload/';
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true); // 디렉터리가 없으면 생성
-        }
+        // 파일 업로드 경로와 상태 출력
+        echo "<script>console.log('임시 파일 경로: " . $_FILES['photo']['tmp_name'] . "');</script>";
+        echo "<script>console.log('목표 경로: " . realpath('./upload/test.jpg') . "');</script>";
 
-        // 파일을 지정된 경로로 이동
-        $upload_success = move_uploaded_file($_FILES['photo']['tmp_name'], $upload_dir . $new_file_name);
+        // 파일 업로드 시도
+        $upload_success = move_uploaded_file($_FILES['photo']['tmp_name'], '/Applications/XAMPP/xamppfiles/htdocs/filegallery/upload/test.jpg');
 
         if ($upload_success) {
-            // 업로드 성공 시 메시지 표시
             echo "
             <script>
                 alert('정상적으로 업로드가 완료되었습니다.');
@@ -45,10 +42,11 @@ if (isset($_FILES['photo'])) {
             </script>
             ";
         } else {
-            // 업로드 실패 시 오류 메시지 표시
             echo "
             <script>
                 alert('파일 업로드에 실패했습니다. 다시 시도해주세요.');
+                console.log('파일 업로드 실패: 임시 파일 경로 - " . $_FILES['photo']['tmp_name'] . ", 목표 경로 - " . realpath('./upload/test.jpg') . "');
+                self.location.href='./gallery_upload_form.php';
             </script>
             ";
         }
