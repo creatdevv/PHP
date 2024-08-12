@@ -1,0 +1,18 @@
+.menu {
+    margin-bottom: 10px;
+}
+
+.wrapper {
+    display: flex;
+    /* flex-direction: column;             세로로 늘리기, 원래 기본값은 row이다. */
+    gap: 10px;                      /* 두 이미지 사이의 갭 설정 */
+}
+
+.img_div {
+    height: 100px;
+}
+
+.img_div > img {
+    width: 100%;
+    height: 100%;
+}
