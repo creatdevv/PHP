@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>갤러리</title>
-    <style>
+    <link rel="stylesheet" href="style.css">
+    <!-- <style>            // style.css 로 파일 옮겨놓기(간편하게 수정)
         .wrapper {
             display: flex;
             flex-wrap: wrap;
@@ -14,7 +15,7 @@
         }
         .img_div img {
             border: 1px solid #ccc;
-        }
+        } -->
     </style>
 </head>
 <body>
