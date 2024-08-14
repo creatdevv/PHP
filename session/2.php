@@ -16,3 +16,4 @@ if(isset($_SESSION['ss_age'])) {
 }
 
 ?>
+<a href="3.php">세션 삭제</a>
