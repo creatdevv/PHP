@@ -12,14 +12,24 @@
         <button>구구단 출력</button>
     </form>
 
-    <?php 
+    <?php
+    // echo "구구단 출력을 해야함."; 
     if(isset($_GET['dan']) and $_GET['dan'] != '') {
-        // echo "구구단 출력을 해야함.";
-
-        // 단
-        for($i =1; $i <=9; $i++) {
+     // 숫자인지 아닌지 판단하는것 (a 입력할 수도 있으니깐)
+        if(is_numeric($_GET['dan'])) {
+             
+            // 단
+            for($i =1; $i <=9; $i++) {
             echo $_GET['dan'] . 'x'. $i . '=' . $_GET['dan'] * $i . '<br>';
         }
+
+        } else {
+            // 문자 입력시(숫자가 아닐시)
+            echo "숫자를 입력해야 구구단 출력이 가능합니다. <br>";
+        }
+    
+
+       
     }
 
     ?>
