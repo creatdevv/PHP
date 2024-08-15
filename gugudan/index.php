@@ -9,8 +9,8 @@
     <!-- <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>"> -->
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="">출력하고자 하는 단을 입력 바랍니다.</label>
-        <input type="text" name="dan">
-        <button>구구단 출력</button>
+        <input type="text" name="dan" id="dan">
+        <button id="submit_btn">구구단 출력</button>
     </form>
 
     <?php
@@ -45,11 +45,21 @@
                echo "숫자를 입력해야 구구단 출력이 가능합니다. <br>";
            }
     
-
-       
     }
 
     ?>
+    <script>
+        const submit_btn = document.querySelector('#submit_btn')
+        
+        submit_btn.addEventListener('click', (e) => {
+            e.preventDefault()          // 폼 제출을 막음
+            const dan = document.querySelector('#dan')
+            if(dan.value== '') {
+                // alert(dan)
+                alert('입력값이 비었습니다.')
+            }
+        })
+    </script>
 
 
 </body>
