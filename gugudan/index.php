@@ -7,9 +7,9 @@
 </head>
 <body>
     <!-- <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>"> -->
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <form method="post" name="form1" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="">출력하고자 하는 단을 입력 바랍니다.</label>
-        <input type="text" name="dan" id="dan">
+        <input type="text" name="dan" id="dan" autocomplete="off">
         <button id="submit_btn">구구단 출력</button>
     </form>
 
@@ -57,7 +57,10 @@
             if(dan.value== '') {
                 // alert(dan)
                 alert('입력값이 비었습니다.')
+                dan.focus();            // 알림후, 다시 입력란으로 돌아올 수 있도록 만들기
+                return false;           // 끝내기
             }
+            document.form1.submit();
         })
     </script>
 
