@@ -60,6 +60,13 @@
                 dan.focus();            // 알림후, 다시 입력란으로 돌아올 수 있도록 만들기
                 return false;           // 끝내기
             }
+
+            if(isNaN(dan.value)) {
+                alert('숫자를 입력해 주세요.')
+                dan.focus()
+                return false;
+            }
+
             document.form1.submit();
         })
     </script>
