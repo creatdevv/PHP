@@ -18,5 +18,7 @@
         <br>
         <button id="login_btn">확인</button>
     </form>
+
+    <a href="member.php">회원 전용 페이지</a>
 </body>
 </html>
