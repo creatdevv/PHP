@@ -1,6 +1,6 @@
 <?php
 $id = (isset($_POST['id']) and $_POST['id'] != '') ? $_POST['id'] : ''; 
-$id = (isset($_POST['pw']) and $_POST['pw'] != '') ? $_POST['pw'] : ''; 
+$pw = (isset($_POST['pw']) and $_POST['pw'] != '') ? $_POST['pw'] : ''; 
 
 if($id == '') {
 
@@ -38,7 +38,7 @@ if($id == 'guest' && $pw == '1234'){       // id와 pw의 예시 가정
 
     echo "<script>
     alert('로그인 실패했습니다. 아이디와 비번을 확인해 주세요.');
-    self.location.href='login.php';  
+    self.location.href='index.php';  
 </script>";
 
 
