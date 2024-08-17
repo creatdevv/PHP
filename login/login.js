@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if(pw.value == '') {
             alert('비밀번호를 입력해주세요')
-            id.focus()
+            pw.focus()
             return false
         }
         

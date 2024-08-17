@@ -8,8 +8,7 @@
 </head>
 <body>
     <h1>로그인</h1>
-    <form method="post" name="login_form" action="login_ok.php"
-    autocomplete="off">
+    <form method="post" name="login_form" action="login_ok.php" autocomplete="off">
         <label for="">아이디</label>
         <input type="text" name="id" id="id" placeholder="아이디 입력">
         <br>
