@@ -24,4 +24,24 @@ if($pw == '') {
     exit;
 }
 
+if($id == 'guest' && $pw == '1234'){       // id와 pw의 예시 가정
+    session_start();
+
+    $_SESSION['ss_id'] = $id;
+
+    echo "<script>
+        alert('로그인 성공했습니다.');
+        self.location.href='member.php';    // 회원전용 페이지로 이동
+    </script>"; 
+
+} else {
+
+    echo "<script>
+    alert('로그인 실패했습니다. 아이디와 비번을 확인해 주세요.');
+    self.location.href='login.php';  
+</script>";
+
+
+}
+
 ?>
