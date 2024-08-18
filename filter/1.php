@@ -1,7 +1,8 @@
 <?php 
 
 // # 정수 필터: FILTER_VALIDATE_INT
-// # 실수 필터: FILTER_VALIDATE_FLOAT)
+// # 실수 필터: FILTER_VALIDATE_FLOAT
+// # IP 필터: FILTER_VALIDATE_IP
 
 
 // $i = 100;
