@@ -39,10 +39,10 @@
 // $ip = "2001:0db8:85a3:08d3:1319:8a2e:0370:7334";
 $ip = '127.0.0.1';
 
-if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
-    echo "잘못된 IPV6 입니다. ";
+if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_QUERY_REQUIRED) === false) {
+    echo "쿼리가 존재합니다. ";
 } else {
-    echo " 정상적인 IPV6입니다.";
+    echo " 쿼리가 존재하지 않습니다.";
 }
 
 
