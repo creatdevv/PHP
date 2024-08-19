@@ -37,9 +37,9 @@
 
 //*IPv6 주소
 // $ip = "2001:0db8:85a3:08d3:1319:8a2e:0370:7334";
-$ip = '127.0.0.1';
+$ip = 'http://daum.net/?key=쇼핑몰';        //url, 쿼리존재
 
-if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_QUERY_REQUIRED) === false) {
+if(filter_var($ip, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED) === false) {
     echo "쿼리가 존재합니다. ";
 } else {
     echo " 쿼리가 존재하지 않습니다.";
