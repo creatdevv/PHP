@@ -7,6 +7,7 @@
 // # URL 필터 : FILTER_VALIDATE_URL
 // # 범위 내/외 확인
 // # IPv6 주소 확인
+// # ASCII 값 127 보다 큰 문자 제거
 
 
 
@@ -37,15 +38,18 @@
 
 //*IPv6 주소
 // $ip = "2001:0db8:85a3:08d3:1319:8a2e:0370:7334";
-$ip = 'http://daum.net/?key=쇼핑몰';        //url, 쿼리존재
+// $ip = 'http://daum.net/?key=쇼핑몰';        //url, 쿼리존재
 
-if(filter_var($ip, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED) === false) {
-    echo "쿼리가 존재합니다. ";
-} else {
-    echo " 쿼리가 존재하지 않습니다.";
-}
+// if(filter_var($ip, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED) === false) {
+//     echo "쿼리가 존재합니다. ";
+// } else {
+//     echo " 쿼리가 존재하지 않습니다.";
+// }
 
 
+//*ASCII 값~
+$str = '<h1>Hello World€Ó!</h1>';
+$newstr = filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 
 
 // $j = filter_var($i, FILTER_VALIDATE_INT);
