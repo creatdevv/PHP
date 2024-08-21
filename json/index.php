@@ -20,12 +20,14 @@ $age = [
 // echo $arr->Peter;           
 
 $json = '{"Peter":35, "Ben":37, "Joe":20 }';
-$obj = json_decode($json, true);
-// $arr = json_decode($json, true);         // >> NULL 출력
+// $obj = json_decode($json, true);
+$arr = json_decode($json, true);         // >> NULL 출력
 
-var_dump($obj);      
+// var_dump($obj);      
 // array 형태로 출력됨 >> array(3) { ["Peter"]=> int(35) ["Ben"]=> int(37) ["Joe"]=> int(20) } 출력
 
-
+foreach($arr as $key => $value) {
+    echo $key . " 는 " . $value . "살 입니다. <br>";
+}
 
 ?>
