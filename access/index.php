@@ -8,8 +8,14 @@ function divide($dividend, $divisor) {
 
 try {
     echo divide(5, 0);
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
+} catch (Exception $ex) {
+    $code = $ex->getCode();
+    $message = $ex->getMessage();
+    $file = $ex->getFile();
+    $line = $ex->getLine();
+    echo "Exception throw in $file on line $line: [Code 0]
+    $message";
+
 } finally {
     echo "프로그램을 종료합니다.";
 }
