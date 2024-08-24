@@ -14,7 +14,7 @@ class Fruit {
         }
     
 }
-    // 상속
+    // 상속받기, But 이건 (내자신)의 클래스
     class Mango extends Fruit {
         public function message() {
             echo "나는 망고입니다.";
@@ -24,4 +24,9 @@ class Fruit {
     $mango = new Mango("망고", "노란색");
     $mango->message();    // >> 나는 망고입니다. 출력
     $mango->intro();   // >> 나는 망고입니다.이 과일 이름은 망고 이고, 색깔은 노란색 입니다. -> 내자신도 사용하고, 부모클래스(상속)도 사용 가능 보여줌
+
+    // Fruit만 상속받아 사용하기
+    $f = new Fruit("토마토", "붉은색");
+    $f->intro();
+
 ?>
