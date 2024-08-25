@@ -12,8 +12,10 @@ class Car {
 
     }
 
+    // 출력 탬플릿(순서))
     function message(){
         echo "<p>" .$this->name."가 생성되었습니다.</p>";
+        echo "<p>[생성번호: " .$this->count."]</p>";
     }
 }
 
