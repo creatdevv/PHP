@@ -2,7 +2,8 @@
 
 class Car {
     // 프로퍼티 만들기
-    private static $count = 0;
+    // private static $count = 0;
+    public static $count = 0;       // public으로 하고, 아래 echo Car::$count;로 직접적으로도 만들 수 있음
     private $name;
 
 
@@ -23,6 +24,10 @@ class Car {
     }
 }
 
+// public - 직접적으로 만들기
+echo Car::$count;       // >> 맨위 0으로 찍힘 
+
+
 // 각각 출력들 생성됨
 $p1 = new Car('볼보');
 $p1->message();
@@ -32,5 +37,8 @@ $p2->message();
 
 $p3 = new Car('페라리');
 $p3->message();
+
+// public - 직접적으로 만들기
+echo Car::$count;  // >> 맨 아래 3으로 찍힘
 
 ?>
