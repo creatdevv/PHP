@@ -8,8 +8,11 @@ class Base {
 
 }
 
-// 상수를 출력하려면 self::AGE로 접근
-echo Base::AGE;
+// 상수를 출력하려면 self::AGE로 접근 (클래스상수는 아래처럼 인스턴스 생성 없이 바로 접근 가능하다)
+// echo Base::AGE;
+
+$base = new Base();     // 인스턴스 생성
+echo $base->mustOlderThan;
 
 
 ?>
