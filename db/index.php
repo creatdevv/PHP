@@ -1,4 +1,10 @@
 <?php 
+// php 설치 정보 확인 (+ PDO 설치되어있는지 확인)
+phpinfo();
+exit;
+
+
+
 // DB와 연동하기 (MySQL): MySQLi OOP
 $servername = "localhost";
 $username = "root";
