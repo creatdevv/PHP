@@ -3,7 +3,7 @@
 // 클래스 상수
 
 class Base {
-    const AGE = 21;     // 클래스 상수는 대문자로 표현(소문자로 쓴다고 해서 에러 발생하진 않음, 다만 앞에$표시하면 에러발생)
+    const AGE = 22;     // 클래스 상수는 대문자로 표현(소문자로 쓴다고 해서 에러 발생하진 않음, 다만 앞에$표시하면 에러발생)
     public $mustOlderThan = 21;
 
 }
@@ -12,7 +12,8 @@ class Base {
 // echo Base::AGE;
 
 $base = new Base();     // 인스턴스 생성
+// echo $base->mustOlderThan;      
+$base->mustOlderThan =220;      // 프로퍼티값 변경해보기 (바뀐 값으로 같이 출력됨)
 echo $base->mustOlderThan;
-
 
 ?>
