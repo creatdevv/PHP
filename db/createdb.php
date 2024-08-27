@@ -5,8 +5,8 @@ $password = "";
 
 try {
     // #DB에 연동할 연결개체 만들기($conn)
-    $conn = new PDO("mysql:host=$servername", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn = new PDO("mysql:host=$servername", $username, $password);    // 연결하기
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);     //에러시 메세지 보일 수 있게
 
     echo "<p>Database에 연결했습니다.</p>";
 
