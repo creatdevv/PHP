@@ -17,7 +17,6 @@ try {
 // $sql = "CREATE DATABASE 생성할데이터베이스이름";
 // $conn->exec($sql);
 
-
 // *테이블 생성 (+테이블 구조)
 try {
 $sql = "CREATE TABLE MyGuests (

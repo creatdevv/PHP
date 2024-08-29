@@ -1,6 +1,6 @@
 <?php 
 // ## create(생성), drop(삭제) 실행 배우기
-
+// 서버 정보 등록하기
 $servername = "localhost";
 $username = "root";
 $password = "";
