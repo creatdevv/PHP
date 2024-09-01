@@ -3,8 +3,6 @@
 phpinfo();
 exit;
 
-
-
 // DB와 연동하기 (MySQL): MySQLi OOP
 $servername = "localhost";
 $username = "root";
