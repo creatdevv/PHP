@@ -1,5 +1,4 @@
 <?php 
-
 echo date("Y");                // 204
 echo "<br>";
 echo date("y");               // 24

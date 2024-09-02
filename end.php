@@ -44,7 +44,6 @@ $ext = $arr[$arr_size -1];      // 인덱스 0부터 시작되니깐 0 - 1로 �
 // print_r($arr);
 echo $ext;          // jpgjpg 출력
 
-
 // *사용자 정의 함수
 function getFileExt2($file_name){
     $arr = explode('.', $file_name);    // *내장함수

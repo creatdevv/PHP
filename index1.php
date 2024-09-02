@@ -11,7 +11,6 @@
 <?php include 'menu.php'; ?>
 <!-- <?php include_once 'menu.php'; ?>   // 한번만 삽입해야할 때 -->
 
-
 <p>인덱스 페이지입니다.</p>
     
 </body>
