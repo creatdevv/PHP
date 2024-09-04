@@ -12,7 +12,6 @@ $password = "";
 // $conn = mysqli_connect($servername, $username, $password);           // 2번째 방법
 $conn = new PDO("mysql:host=$servername", $username, $password);        // try&catch 사용
 
-
 //1-1
 // if ($conn->connect_error) {
     // echo "DB 연결에 실패했습니다.";
