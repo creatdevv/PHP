@@ -15,9 +15,16 @@ echo "<p>DB 연결에 성공했습니다.</p>";
     echo $e->getMessage();
 }
 
-// $sql = "INSERT INTO myguests(firstname, lastname, email)
-// VALUES('John', 'Doe', 'john@example.com)";
-// $conn->exec($sql);
+try {
+$sql = "INSERT INTO myguests(firstname, lastname, email) VALUES('John', 'Doe', 'john@example.com)";
+$conn->exec($sql);
+echo "<p>입력에 성공했습니다.</p>";
+
+}catch(PDOException $e) {
+    echo $e->getMessage();
+}
+
+
 
 $conn = null;
 ?>
