@@ -11,15 +11,24 @@ $rs = $stmt->fetchAll(PDO::FETCH_BOTH);    // 디폴트 기준값 으로 가져�
 
 // var_dump($rs);
 // print_r($rs);
-echo "<table border='1'>";
+echo "<table border='1'>
+<tr>
+<th>FirstName</th>
+<th>LastName</th>
+<th>Email</th>
+</tr>
+";
 
 foreach($rs AS $row) {
     echo "<tr>
     <td>".$row['firstname']."</td>
+    <td>".$row['lastname']."</td>
+    <td>".$row['email']."</td>
     </tr>";
 }
 
 echo "</table>";
 
+$conn = null;
 
 ?>
