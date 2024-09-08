@@ -1,5 +1,5 @@
 <?php 
-// DB연결은 PDO방식으로~!!
+// DB연결은 PDO방식으로~!
 
 $servername = "localhost";
 $username = "root";
@@ -13,5 +13,6 @@ try {
     echo "DB연결 성공";
 } catch(PDOException $e) {
     echo $e->getMessage();
+    exit;
 }
 ?>
