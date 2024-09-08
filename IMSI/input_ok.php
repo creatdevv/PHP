@@ -21,6 +21,7 @@ echo "게시물 등록에 성공했습니다.";
     echo $e->getMessage();
 }
 
+$conn = null;
 
 // // DB 연결 파일 포함
 // include 'db.php';
