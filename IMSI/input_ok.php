@@ -18,6 +18,11 @@ echo "게시물 등록에 성공했습니다.";
 
 $last_id = $conn->lastInsertId();
 echo "<p>게시물 번호는 {$last_id}입니다</p>";
+echo "
+<script>
+self.location.href='view.php?idx=".$last_id."';
+</script>
+";
 
 } catch(PDOException $e) {
     echo $e->getMessage();
