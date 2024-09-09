@@ -3,8 +3,8 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "";     // 실제 MySQL root 계정 비밀번호를 입력하면, 정상적으로 성공되었다는 메세지 나옴!
-$dbname = "kingchobo";  // 올바른 데이터베이스 이름
+$password = "12345678";     // 실제 MySQL root 계정 비밀번호를 입력하면, 정상적으로 성공되었다는 메세지 나옴!
+$dbname = "kingchobo";  // 데이터베이스 이름
 
 
 try {

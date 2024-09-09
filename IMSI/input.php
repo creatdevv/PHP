@@ -6,7 +6,7 @@
     <title>글등록Form</title>
 </head>
 <body>
-    <form method="post" action="input_ok.php">
+    <form method="post" action="input_ok.php">  <!--보내는곳: post-->
     <label>글 제목</label>
     <input type="text" name="subject" class="name_input"> <br>
     <label>글 내용</label>

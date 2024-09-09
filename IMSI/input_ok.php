@@ -1,5 +1,5 @@
 <?php 
-// input에서 작성하면, input_ok로 내용과 함께 넘어감
+// input에서 작성하면, input_ok로 내용과 함께 넘어감(받는곳)
 include 'db.php';
 
 print_r($_POST);
@@ -14,14 +14,28 @@ $sql = "INSERT INTO board(subject, content, rdate)
 VALUES( '{$subject}', '{$content}', NOW())";
 
 $conn->exec($sql);
-// echo $sql;
 echo "게시물 등록에 성공했습니다.";
+
+$last_id = $conn->lastInsertId();
+echo "<p>게시물 번호는 {$last_id}입니다</p>";
 
 } catch(PDOException $e) {
     echo $e->getMessage();
 }
 
 $conn = null;
+
+
+// #sql에 쿼리문 아래와 같이 작성
+// CREATE TABLE board (
+//     idx INTEGER UNSIGNED NOT NULL AUTO_INCREMENT, 
+//     subject VARCHAR(255) DEFAULT '' COMMENT '게시물제목',
+//     content TEXT COMMENT '게시물내용',
+//     rdate DATETIME,
+//     PRIMARY KEY (idx)
+// );
+
+
 
 // // DB 연결 파일 포함
 // include 'db.php';
