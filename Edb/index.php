@@ -6,11 +6,12 @@
     <title>CSV 파일 업로드</title>
 </head>
 <body>
-    <form method="POST" name="uform" enctype="multipart/form-data" action="csv_upload.php"></form>
+    <form method="POST" name="uform" enctype="multipart/form-data" action="csv_upload.php">
     <label for="">CSV 파일을 업로드 해주세요.</label><br>
     <input type="file" name="csv">
     <button id="btn">확인</button>
-
+    </form>
+    
     <script>
         const btn = document.querySelector("#btn");
         btn.addEventListener("click", (e) => {
