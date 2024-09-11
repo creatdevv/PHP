@@ -5,11 +5,18 @@ include "db.php";
 print_r($_FILES);
 // fgetcsv()    : csv에서 파일 불러오기
 
-$arr = [];      //배열
+// $arr = [];      //배열
 
 $file = fopen($_FILES['csv']['tmp_name'], 'r');
 while(($line = fgetcsv($file)) !== FALSE) {
-    array_push($arr, $line);
+    // array_push($arr, $line);
+
+    $sql = "INSERT INTO csvmember(cs_name, cs_email) VALUES('". $line[0]."',
+    '". $line[1] ."');";
+
+    echo $sql;
+    exit;
+
 }
 
 fclose($file);      // 열었으면, 반드시 닫아주기
