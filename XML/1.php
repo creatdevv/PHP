@@ -16,7 +16,9 @@ echo "<h2>".$xmldom->channel->description."</h2>";  // 기사내용 출력
 
 $i = 0;
 foreach($xmldom->channel->item AS $row) {
-   echo "<a href='".$row->link."'>".$row->title . "</a><br>";
+   echo "<a href='".$row->link."'>".$row->title . "</a>
+   [".$row->pubDate."]      // 날짜 불러오기
+   <br>";
    $i++;
    if($i == 5) {    // 기사 5개만 불러오기  
     exit;
