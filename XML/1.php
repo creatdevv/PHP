@@ -6,7 +6,7 @@ $myxml = file_get_contents('https://feeds.feedburner.com/zdkorea');
 
 // echo $myxml;
 
-$xmldom = simplexml_load_string($myxml);
+$xmldom = simplexml_load_string($myxml);       //#중요!!! 불러오기!!
 
 // print_r($xmldom);
 // exit;
