@@ -12,9 +12,14 @@ curl_close($ch);
 // #데이터 배열로 바꾸기
 $arr = json_decode($response);
 
-// 필요한 데이터만 출력
-echo "Temperature: " . $arr->temperature . "<br>";
-echo "Humidity: " . $arr->humidity . "<br>";
-echo "Wind: " . $arr->wind . "<br>";
+// // 필요한 데이터만 출력
+// echo "Temperature: " . $arr->temperature . "<br>";
+// echo "Humidity: " . $arr->humidity . "<br>";
+// echo "Wind: " . $arr->wind . "<br>";
+
+foreach($arr AS $key => $var) {
+    echo $key .':'. $var;
+    echo "<br>";
+}
 
 ?>
