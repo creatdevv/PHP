@@ -13,5 +13,29 @@
             <span id="msg">아이디는 대소문자 구분없이 12자 이내로 입력 바랍니다.</span>
         </p>
     </form>
+
+    <script>
+        const ajax_butn = document.querySelector('#ajax_butn');
+        ajax_butn.addEventListener("click", ()=> { 
+            const user_id = document.querySelector("#user_id");
+            const span_msg = document.querySelector("#msg");
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "./check_id.php?id=" +user_id.value, true);
+
+            //요청전송
+            xhr.send();
+
+            //통신후 작업
+            xhr.onload = () => {
+                //통신 성공
+                if(xhr.status == 200) {
+                    console.log('통신성공');
+                }else {
+                    console.log(xhr.status);
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
