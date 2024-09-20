@@ -19,6 +19,7 @@
         ajax_butn.addEventListener("click", ()=> { 
             const user_id = document.querySelector("#user_id");
             const span_msg = document.querySelector("#msg");
+           
             const xhr = new XMLHttpRequest();
             xhr.open("GET", "./check_id.php?id=" +user_id.value, true);
 
