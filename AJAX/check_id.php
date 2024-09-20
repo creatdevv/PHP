@@ -15,7 +15,8 @@ $roow = $stmt->fetch();
 // print_r($row);       >>확인용
 
 $arr = array("result" => $row["cnt"] ? "exist" : "not_exist");
-
+// $rs = $row["cnt"] ? "exist" : "not_exist";       >> 위와 같은 방식
+// $arr = array("result"=> $rs);
 
 
 
