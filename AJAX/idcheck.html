@@ -30,7 +30,16 @@
             xhr.onload = () => {
                 //통신 성공
                 if(xhr.status == 200) {
-                    console.log('통신성공');
+                    // console.log('통신성공');
+                    // console.log(xhr.response);           >> 아래 되는지 확인
+                    const obj = JSON.parse(xhr.response);       // JSON parson() 메소드 사용!
+                    if(obj.result == "exist") {
+                        span_msg.textContent = "이미 사용중인 아이디 입니다.";
+                        user_id.value = "";
+                        use_id.focus();
+                } else {
+                    span_msg.textContent = "사용이 가능한 아이디 입니다.";
+                       }  
                 }else {
                     console.log(xhr.status);
                 }
