@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax post 전송</title>
+    <style>
+    #dis {
+        margin-top: 30px;
+        width: 300px;
+    }
+    #dis img{
+        max-width: 100%;
+    }
+</style>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data"> 
+        <input type="file" name="photo"> <input type="button" value="확인" id="upload_btn">
+    </form>
+    <div id="dis"></div>    
+
+    <script>
+        const upload_btn = document.querySelector("#upload_btn");
+        upload_btn.addEventListener("click", () => {
+            const f = document.querySelector("#form1");
+            const f1 = new FormData(f);
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "./ajax.php", true);
+            xhr.send(f1);
+            xhr.onload = () => {
+                console.log(xhr.status);
+            }
+        });
+    </script>
+</body>
+</html>
