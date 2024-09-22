@@ -29,7 +29,10 @@
             xhr.open("POST", "./ajax.php", true);
             xhr.send(f1);
             xhr.onload = () => {
-                console.log(xhr.status);
+                // console.log(xhr.status);
+                if(xhr.status == 200) {
+                    
+                }
             }
         });
     </script>
