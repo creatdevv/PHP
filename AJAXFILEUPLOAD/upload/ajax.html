@@ -31,7 +31,13 @@
             xhr.onload = () => {
                 // console.log(xhr.status);
                 if(xhr.status == 200) {
+                    const data = JSON.parse(xhr.responseText);
                     
+                    if(data.result == 'success') {
+
+                        const dis = document.querySelector("#dis");
+                        dis.innerHTML = '<img src="' +data.img + '">';
+                    }
                 }
             }
         });
