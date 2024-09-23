@@ -16,7 +16,11 @@
 </head>
 <body>
     <form action="" method="post" enctype="multipart/form-data"> 
-        <input type="file" name="photo"> <input type="button" value="확인" id="upload_btn">
+        <!-- <input type="file" name="photo"> -->        <!-- 파일1개 업로드 -->
+      <input type="file" name="photo[]" multiple>                 <!-- 멀티 업로드 -->
+        
+      
+        <input type="button" value="확인" id="upload_btn">
     </form>
     <div id="dis"></div>    
 
@@ -32,11 +36,19 @@
                 // console.log(xhr.status);
                 if(xhr.status == 200) {
                     const data = JSON.parse(xhr.responseText);
+                    const dis = document.querySelector("#dis");
                     
                     if(data.result == 'success') {
-
-                        const dis = document.querySelector("#dis");
-                        dis.innerHTML = '<img src="' +data.img + '">';
+                        if(data.img.indexOf('|') !=-1) {
+                            const arr_imgs = data.img.split('|');
+                            for( let aa of arr_imgs) {
+                                console.log(img);
+                                dis.innerHTML += '<img src="' + img + '">';
+                            }
+                        } else {
+                            dis.innerHTML = '<img src="' +data.img + '">';
+                        }
+    
                     }
                 }
             }
