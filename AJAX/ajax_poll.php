@@ -27,6 +27,24 @@ if($vote == 0 ) {
 }
 
 file_get_contents($filename, "$yes,$no");           // 찍힌걸 기록을 해줌(계속 축적됨) 
-echo $yes . ' '. $no;
+// echo $yes . ' '. $no;
+
+$yes_width = round(($yes / ($yes + $no)) * 100);    // 반올림해서 투표결과 수치 보여줌 (소수점까지 보여주기 원할시// 1,2 단위로..: $yes_width = round(($yes / ($yes + $no)) * 100, 1);)
+$no_width = round(($yes / ($yes + $no)) * 100);
+
+echo $yes_width . ' '. $no_width;
 
 ?>
+<!-- #이미지로 표 보이기(투표결과) -->
+<h2>투표결과 : </h2>
+
+<table>
+<tr>
+<td>예</td>
+<td width="100"><img src="https://www.w3schools.com/php/poll.gif" height="20" width="50%"></td>
+</tr>
+<tr>
+<td>아니오</td>
+<td><img src="https://www.w3schools.com/php/poll.gif" height="20" width="50%"></td>
+</tr>
+</table>
