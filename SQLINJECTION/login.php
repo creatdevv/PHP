@@ -17,6 +17,13 @@ $stmt->bindParam(':pw', $pw);
 $stmt->execute();
 $row = $stmt->fetch();
 
-var_dump($row);
+// var_dump($row);
+if($row) {
+    session_start();
+    $_SESSION['id']=$id;
+    echo "<script>self.location.href='/member.php';</script>";      // 로그인시, 넘어가는 페이지 만들어주기
+} else {
+    exit;
+}
 
 ?>
