@@ -219,7 +219,19 @@
     xhr.send(f);
 
     xhr.onload = () => {
-        console.log(xhr.status);
+        // console.log(xhr.status);
+        if(xhr.status == 200) {
+            const data = JSON.parse(xhr.responseText);
+            if(Data.result == 'success') {
+                alert('로그인 성공');
+                self.location.href='./member.html';
+            } else if(data.result == 'fail') {
+                alert('로그인 실패했어요. 아이디, 비번 맞나 체크하세요.');
+            }
+
+        } else {
+            alert('통신에 실패했습니다.');
+        }
     }
 });
 
