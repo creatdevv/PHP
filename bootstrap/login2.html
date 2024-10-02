@@ -166,7 +166,7 @@
 
     
 <main class="form-signin w-100 m-auto">
-    <form method="post" name="login_form" action="login_ok.php">
+    <form method="post" id="login_form" name="login_form" action="login_ok.php">
        
     <img class="mb-4" src="https://getbootstrap.kr/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
@@ -208,6 +208,18 @@
         pw.focus();
         event.preventDefault(); // 폼 제출 방지
         return;
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "./login_ok.php", true);
+
+    const login_form = document.querySelector("#login_form");
+    const f1 = new FormData(login_form);
+
+    xhr.send(f);
+
+    xhr.onload = () => {
+        console.log(xhr.status);
     }
 });
 
