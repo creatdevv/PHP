@@ -1,14 +1,15 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['id']) or $_SESSION['id'] != '') {
-    echo "이 페이지에 접근할 수 없습니다.";
-    exit;
+if(!isset($_SESSION['id']) || $_SESSION['id'] == '') {
+  echo "이 페이지에 접근할 수 없습니다.";
+  exit;
 }
 ?>
 
 <!doctype html>
-<html lang="en" class="h-100" data-bs-theme="auto">
+<html lang="en" class="h-100" data-bs-theme="auto
+">
   <head><script src="/docs/5.3/assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
