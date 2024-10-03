@@ -6,5 +6,11 @@ require "db.php";               //반드시 필요하다~!! (db.php 연결)
 
 $subject = $_POST['subject'];
 
+$sql = "INSERT INTO `todolist`(subject) VALUES(:subject)";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':subject', $subject);
+$rs = $stmt->execute();
+
+print_r($rs);
 
 ?>
