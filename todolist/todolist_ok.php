@@ -11,6 +11,22 @@ $stmt = $conn->prepare($sql);
 $stmt->bindParam(':subject', $subject);
 $rs = $stmt->execute();
 
-print_r($rs);
+// print_r($rs);
+
+if($rs) {
+    echo "
+    <script>
+    alert('정상적으로 등록되었습니다.');
+    self.location.href='./index.php';
+    </script>
+    ";
+} else {
+    echo "
+    <script>
+    alert('등록 과정에서 오류가 발생하였습니다.');
+    history.go(-1);
+    </script>
+    ";
+}
 
 ?>
