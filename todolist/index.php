@@ -14,7 +14,7 @@
 
 </head>
 <body>
-    <form name="todoform" action="todolist_ok.php">
+    <form name="todoform" method="POST" action="todolist_ok.php">
         할일: <input type="text" name="subject" id="subject" autocomplete="off">
         <input type="button" id="todobtn" value="등록">
  
