@@ -33,9 +33,16 @@ exit;
     <?php 
         foreach($rs AS $row) {
             // print_r($row);       //확인
+
+            if($row['status'] == 1) {
+                $class = "style='text-decoration:line-through'";
+            } else {
+                $class = "";
+            }
+
             echo "
             <tr>
-                <td>".$row['subject'] ."</td>
+                <td $class>".$row['subject'] ."</td>
                 <td><button onclick='todoCheck(".$row['idx'].")'>확인</button></td>
             </tr>
             ";

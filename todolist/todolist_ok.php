@@ -36,5 +36,14 @@ if($rs) {
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':idx', $_POST['idx']);
     $stmt->execute();
+
+    echo "
+    <script>
+        self.location.href='./index.php';
+    </script>
+    
+    "
+
+
 }
 ?>
