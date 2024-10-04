@@ -13,10 +13,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
+// 취소선 js
 function todoCheck(idx) {
     const multiform = document.querySelector("#multiform");
     multiform.mode.value = "done";
+    multiform.idx.value = idx;
+    multiform.submit();
+}
+
+// 취소선을 취소 js
+function todoUnCheck(idx) {
+    const multiform = document.querySelector("#multiform");
+    multiform.mode.value = "undone";
     multiform.idx.value = idx;
     multiform.submit();
 }

@@ -30,6 +30,7 @@ if($rs) {
     ";
 }
 
+// 취소선
 } else if($_POST['mode'] == 'done') {
     // print_r($_POST);
     $sql = "UPDATE `todolist` SET `status`=1 WHERE `idx`=:idx";
@@ -42,8 +43,24 @@ if($rs) {
         self.location.href='./index.php';
     </script>
     
-    "
-
-
+    ";
 }
+
+//취소선을 취소
+else if($_POST['mode'] == 'undone') {
+    // print_r($_POST);
+    $sql = "UPDATE `todolist` SET `status`=0 WHERE `idx`=:idx";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':idx', $_POST['idx']);
+    $stmt->execute();
+
+    echo "
+    <script>
+        self.location.href='./index.php';
+    </script>
+    
+    ";
+}
+
+
 ?>

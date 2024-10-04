@@ -43,7 +43,8 @@ exit;
             echo "
             <tr>
                 <td $class>".$row['subject'] ."</td>
-                <td><button onclick='todoCheck(".$row['idx'].")'>확인</button></td>
+                <td><button onclick='todoCheck(".$row['idx'].")'>확인</button></td>        //취소선 빌드업
+                <td><button onclick='todoUnCheck(".$row['idx'].")'>취소</button></td>     // 취소선을 취소 빌드업
             </tr>
             ";
         }
