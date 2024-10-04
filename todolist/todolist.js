@@ -12,3 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 });
+
+
+function todoCheck(idx) {
+    const multiform = document.querySelector("#multiform");
+    multiform.mode.value = "done";
+    multiform.idx.value = idx;
+    multiform.submit();
+}

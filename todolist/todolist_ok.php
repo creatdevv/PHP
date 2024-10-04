@@ -4,8 +4,9 @@
 
 require "db.php";               //반드시 필요하다~!! (db.php 연결)
 
-$subject = $_POST['subject'];
+if($_POST['mode'] == "input") {
 
+$subject = $_POST['subject'];
 $sql = "INSERT INTO `todolist`(subject) VALUES(:subject)";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':subject', $subject);
@@ -16,7 +17,7 @@ $rs = $stmt->execute();
 if($rs) {
     echo "
     <script>
-    alert('정상적으로 등록되었습니다.');
+    //alert('정상적으로 등록되었습니다.');
     self.location.href='./index.php';
     </script>
     ";
@@ -29,4 +30,11 @@ if($rs) {
     ";
 }
 
+} else if($_POST['mode'] == 'done') {
+    // print_r($_POST);
+    $sql = "UPDATE `todolist` SET `status`=1 WHERE `idx`=:idx";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':idx', $_POST['idx']);
+    $stmt->execute();
+}
 ?>
