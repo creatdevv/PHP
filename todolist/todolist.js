@@ -31,8 +31,10 @@ function todoUnCheck(idx) {
 
 //삭제버튼 js
 function todoDel(idx) {
+    if(confirm('삭제하시겠습니까?')){           // 삭제여부 물어보고 삭제시키기
     const multiform = document.querySelector("#multiform");
     multiform.mode.value = "del";
     multiform.idx.value = idx;
     multiform.submit();
+    }
 }
