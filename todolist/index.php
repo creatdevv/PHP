@@ -36,15 +36,20 @@ exit;
 
             if($row['status'] == 1) {
                 $class = "style='text-decoration:line-through'";
+                $btn = "<button onclick='todoUnCheck(".$row['idx'].")'>취소</button>";       //#취소선을 취소 빌드업을 이쪽으로 옮겨서, 통합버튼 만들어주기!
+                
             } else {
                 $class = "";
+                $btn = "<button onclick='todoCheck(".$row['idx'].")'>확인</button>";         //#취소선 빌드업 이쪽으로 옮겨서, 통합버튼 만들어주기!
+                
             }
 
             echo "
             <tr>
                 <td $class>".$row['subject'] ."</td>
-                <td><button onclick='todoCheck(".$row['idx'].")'>확인</button></td>        //취소선 빌드업
-                <td><button onclick='todoUnCheck(".$row['idx'].")'>취소</button></td>     // 취소선을 취소 빌드업
+                // <td><button onclick='todoCheck(".$row['idx'].")'>확인</button></td>        //#취소선 빌드업
+                // <td><button onclick='todoUnCheck(".$row['idx'].")'>취소</button></td>     //#취소선을 취소 빌드업
+                <td>".$btn."</td>           //#취소선,취소선취소 기능 통합버튼
             </tr>
             ";
         }

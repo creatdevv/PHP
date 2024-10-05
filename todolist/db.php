@@ -5,13 +5,12 @@ $password = "";
 $dbname = "kingchobo";
 
 try {
-$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-// echo "<p>DB 연결에 성공했습니다.</p>";
-} catch(PDOException $e) {
-    echo $e->getMessage();
-    exit;
+    $conn = new PDO("mysql:host=localhost;dbname=yourdbname", "username", "password");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "DB connection successful!";
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+    exit();
 }
 
 ?>
