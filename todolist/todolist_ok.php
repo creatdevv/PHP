@@ -30,28 +30,50 @@ if($rs) {
     ";
 }
 
-// 취소선
+//#취소선
 } else if($_POST['mode'] == 'done') {
+    $idx = $_POST['idx'];
+    do_undo($idx, 1);
     // print_r($_POST);
-    $sql = "UPDATE `todolist` SET `status`=1 WHERE `idx`=:idx";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':idx', $_POST['idx']);
-    $stmt->execute();
+ 
+    // $sql = "UPDATE `todolist` SET `status`=1 WHERE `idx`=:idx";
+    // $stmt = $conn->prepare($sql);
+    // $stmt->bindParam(':idx', $_POST['idx']);
+    // $stmt->execute();
 
-    echo "
-    <script>
-        self.location.href='./index.php';
-    </script>
-    
-    ";
+    // echo "
+    // <script>
+    //     self.location.href='./index.php';
+    // </script>
+    // ";
 }
 
-//취소선을 취소
+//#취소선을 취소
 else if($_POST['mode'] == 'undone') {
+    $idx = $_POST['idx'];
+    do_undo($idx, 0);
     // print_r($_POST);
-    $sql = "UPDATE `todolist` SET `status`=0 WHERE `idx`=:idx";
+
+    // $sql = "UPDATE `todolist` SET `status`=0 WHERE `idx`=:idx";
+    // $stmt = $conn->prepare($sql);
+    // $stmt->bindParam(':idx', $_POST['idx']);
+    // $stmt->execute();
+
+    // echo "
+    // <script>
+    //     self.location.href='./index.php';
+    // </script>
+    // ";
+}
+
+//#취소선,취소선을 취소 간단히(한번에)
+function do_undo($idx, $status) {
+    global $conn;               // global : 외부에 있는 변수를 쓰겠다~~
+
+    $sql = "UPDATE `todolist` SET `status`=:status WHERE `idx`=:idx";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':idx', $_POST['idx']);
+    $stmt->bindParam(':idx',$idx);
+    $stmt->bindParam(':status', $status);
     $stmt->execute();
 
     echo "
