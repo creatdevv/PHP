@@ -28,3 +28,11 @@ function todoUnCheck(idx) {
     multiform.idx.value = idx;
     multiform.submit();
 }
+
+//삭제버튼 js
+function todoDel(idx) {
+    const multiform = document.querySelector("#multiform");
+    multiform.mode.value = "del";
+    multiform.idx.value = idx;
+    multiform.submit();
+}

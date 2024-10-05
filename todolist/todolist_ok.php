@@ -66,6 +66,21 @@ else if($_POST['mode'] == 'undone') {
     // ";
 }
 
+//#삭제 기능
+else if($_POST['mode'] == 'del') {
+    $sql = "DELETE FROM `todolist` WHERE `idx`=:idx";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':idx', $_POST['idx']);
+    $stmt->execute();
+
+    echo "
+    <script>
+        self.location.href='./index.php';
+    </script>
+    
+    ";
+}  
+
 //#취소선,취소선을 취소 간단히(한번에)
 function do_undo($idx, $status) {
     global $conn;               // global : 외부에 있는 변수를 쓰겠다~~
@@ -83,6 +98,8 @@ function do_undo($idx, $status) {
     
     ";
 }
+
+
 
 
 ?>

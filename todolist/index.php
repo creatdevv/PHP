@@ -49,7 +49,8 @@ exit;
                 <td $class>".$row['subject'] ."</td>
                 // <td><button onclick='todoCheck(".$row['idx'].")'>확인</button></td>        //#취소선 빌드업
                 // <td><button onclick='todoUnCheck(".$row['idx'].")'>취소</button></td>     //#취소선을 취소 빌드업
-                <td>".$btn."</td>           //#취소선,취소선취소 기능 통합버튼
+                <td>".$btn."</td>           //#취소선,취소선취소 기능 통합버튼(2기능,1버튼)
+                <td><button onclick='todo_del(".$row['idx']."]')>삭제</button></td>     //#삭제버튼 빌드업 
             </tr>
             ";
         }
