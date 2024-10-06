@@ -31,6 +31,11 @@ if($end_page > $total_page) {
 
 echo "<a href='001.php?page=1'>First</a> ";
 
+$prev_page = $start_page -1;
+if($prev_page > 1) {
+    echo "<a href='001.php?page=".$prev_page."'>Prev</a> ";
+}
+
 // 페이징 출력
 for ($i = $start_page; $i <= $end_page; $i++) {
     if ($page == $i) {
@@ -40,6 +45,11 @@ for ($i = $start_page; $i <= $end_page; $i++) {
         // 다른 페이지는 링크로 표시
         echo "<a href='001.php?page=" . $i . "'>" . $i . "</a> ";
     }
+}
+
+$next_page = $end_page + 1;
+if($next_page <= $total_page) {
+    echo " <a href='001.php?page=". $next_page. "'>Next</a> ";
 }
 
 echo "<a href='001.phppage=". $total_page."'>Last</a>";
