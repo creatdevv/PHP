@@ -1,6 +1,6 @@
 <?php 
 
-$total = 100;   // 게시물 총 개수
+$total = 312;   // #게시물 총 개수
 
 $limit = 10;    // 한 화면 출력 개수  (1페이지: 0~9, 2페이지: 10~19, ...)
 
@@ -52,7 +52,7 @@ if($next_page <= $total_page) {
     echo " <a href='001.php?page=". $next_page. "'>Next</a> ";
 }
 
-echo "<a href='001.phppage=". $total_page."'>Last</a>";
+echo "<a href='001.php?page=". $total_page."'>Last</a>";
 
 // ## 예시
 // 1 1~5
