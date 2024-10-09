@@ -1,4 +1,19 @@
 <?php 
+$total = 101;
+$limit = 10;
+$page_limit = 5;
+$page = (isset($_GET['page'])&& $_GET['page'] != '' && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
+
+/*
+    total : 게시물의 총 개수
+    limit : 게시물의 총 개수
+    page_limit : 출력페이지수
+    page : 현재페이지
+*/
+
+my_pagenation($total, $limit, $page_limit, $page);
+
+function my_pagenation($total, $limit, $page_limit, $page) {
 
 $total = 312;   // #게시물 총 개수
 
@@ -9,7 +24,8 @@ $page_limit = 5;
 
 $data = range(1, $total);      // 게시물 데이터 생성 (1~100)
 
-$page = isset($_GET['page']) && $_GET['page'] != '' && is_numeric($_GET['page']) ? $_GET['page'] : 1;   // 페이지 설정 (URL에 ?page=2 와 같은 값을 받을 때)
+// 현재 페이지
+// $page = isset($_GET['page']) && $_GET['page'] != '' && is_numeric($_GET['page']) ? $_GET['page'] : 1;   // 페이지 설정 (URL에 ?page=2 와 같은 값을 받을 때)
 
 $start = ($page -1) * $limit;       // 게시물 시작 인덱스
 
@@ -113,6 +129,8 @@ if($next_page <= $total_page) {
 
 if($page < $total_page) {
   echo "<a href='001.php?page={$total_page}'>Last</a> ";
+
+}
 
 }
 
