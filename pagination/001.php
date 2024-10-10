@@ -28,9 +28,9 @@ function my_pagenation($total, $limit, $page_limit, $page) {
 
     $rs_str = "<a href='001.php?page=1'>First</a> ";
 
-    $prev_page = $start_page - 1;
-    if($prev_page > 1) {
-        $rs_str .= "<a href='001.php?page=" . $prev_page . "'>Prev</a> ";
+    $prev_page = $page - 1; // 현재 페이지의 이전 페이지
+    if($prev_page >= 1) {
+        $rs_str .= "<a href='001.php?page=" . $prev_page . "'>Prev</a> "; // Prev 링크 추가
     }
 
     // 페이징 출력
@@ -42,9 +42,9 @@ function my_pagenation($total, $limit, $page_limit, $page) {
         }
     }
 
-    $next_page = $end_page + 1;
+    $next_page = $page + 1;
     if($next_page <= $total_page) {
-        $rs_str .= "<a href='001.php?page=" . $next_page . "'>Next</a> ";
+        $rs_str .= "<a href='001.php?page=" . $next_page . "'>Next</a> "; // Next 링크 추가
     }
 
     $rs_str .= "<a href='001.php?page=" . $total_page . "'>Last</a>";
