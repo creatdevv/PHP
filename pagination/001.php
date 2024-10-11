@@ -1,54 +1,92 @@
-<?php 
+<?php
+
+include 'lib.php';
+
+// 게시물의 총 갯수
 $total = 101;
+
+// 한 화면 출력 갯수
 $limit = 10;
+
+// 출력페이지수 맨처음 < 1 2 3 4 5 > 맨마지막
 $page_limit = 5;
-$page = (isset($_GET['page'])&& $_GET['page'] != '' && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
 
-$rs_str = my_pagenation($total, $limit, $page_limit, $page);
+// 현재 페이지
+$page = (isset($_GET['page']) && $_GET['page'] != '' && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
 
-echo $rs_str;
+// 게시물 데이터
+$data = range(1, $total); 
 
-function my_pagenation($total, $limit, $page_limit, $page) {
-    $start = ($page -1) * $limit; // 게시물 시작 인덱스
+$start = ($page - 1) * $limit;
+$end = (($start + $limit) > $total) ? $total : ($start + $limit);
 
-    // 게시물 출력
-    for($i = $start; $i < ($start + $limit); $i++) {
-        if($i < $total) {
-            echo ($i + 1) . "번 게시글 <br>"; // 게시물 번호를 1부터 시작
-        }
-    }
-
-    $total_page = ceil($total / $limit); // 총 페이지 수 계산
-    $start_page = ((floor(($page - 1) / $page_limit)) * $page_limit) + 1; // 페이징 시작 페이지
-    $end_page = $start_page + $page_limit - 1; // 페이징 끝 페이지
-
-    if ($end_page > $total_page) {
-        $end_page = $total_page;
-    }
-
-    $rs_str = "<a href='001.php?page=1'>First</a> ";
-
-    $prev_page = $page - 1; // 현재 페이지의 이전 페이지
-    if($prev_page >= 1) {
-        $rs_str .= "<a href='001.php?page=" . $prev_page . "'>Prev</a> "; // Prev 링크 추가
-    }
-
-    // 페이징 출력
-    for ($i = $start_page; $i <= $end_page; $i++) {
-        if ($page == $i) {
-            $rs_str .= "<strong>" . $i . "</strong> ";
-        } else {
-            $rs_str .= "<a href='001.php?page=" . $i . "'>" . $i . "</a> ";
-        }
-    }
-
-    $next_page = $page + 1;
-    if($next_page <= $total_page) {
-        $rs_str .= "<a href='001.php?page=" . $next_page . "'>Next</a> "; // Next 링크 추가
-    }
-
-    $rs_str .= "<a href='001.php?page=" . $total_page . "'>Last</a>";
-
-    return $rs_str;
+// 출력
+for($i = $start; $i < $end; $i++) {
+  if(isset($data[$i])) {
+    echo $data[$i] .'번 게시글 <br>';
+  }
 }
-?>
+
+// 1 2 3 4 5  =====  6 7 8 9 10
+// 총 페이지 수
+$total_page = ceil($total / $limit);
+
+// 1 1
+// 2 1
+// 3 1
+// 4 1
+// 5 1
+// 6 6
+// 7 6
+// 8 6
+// 9 6
+// 10 6
+// 11 11
+
+$start_page = ( ( floor( ($page - 1 ) / $page_limit ) ) * $page_limit ) + 1;
+$end_page = $start_page + $page_limit -1;
+
+if($end_page > $total_page) {
+  $end_page = $total_page;
+}
+
+$prev_page = $start_page - 1;
+if($prev_page < 1) {
+  $prev_page = 1;
+}
+
+
+// 1page 0.0 --> 0*5 + 1 = 1
+// 2page 0.2 --> 0*5 + 1 = 1
+// 3page 0.4 --> 0*5 + 1 = 1
+// 4page 0.6 --> 0*5 + 1 = 1
+// 5page 0.8 --> 0*5 + 1 = 1
+// 6page 1.0 --> 1*5 + 1 = 6
+// 7page 1.2 --> 1*5 + 1 = 6
+// 8page 1.4 --> 1*5 + 1 = 6
+// 9page 1.6 --> 1*5 + 1 = 6
+// 10page 1.8 --> 1*5 + 1 = 6
+// 11page 2.0 --> 1*5 + 1 = 11
+
+echo "<a href='001.php?page=1'>First</a> ";
+
+if($prev_page > 1) {
+  echo "<a href='001.php?page={$prev_page}'>Prev</a> ";
+}
+
+for($i = $start_page; $i <= $end_page; $i++) {
+  if($i == $page) {
+    echo $i .' ';
+  }else {
+    echo "<a href='001.php?page={$i}'>{$i}</a> ";
+  }
+}
+
+$next_page = $end_page + 1;
+if($next_page <= $total_page) {
+  echo "<a href='001.php?page={$next_page}'>Next</a> ";
+}
+
+if($page < $total_page) {
+  echo "<a href='001.php?page={$total_page}'>Last</a> ";
+}
