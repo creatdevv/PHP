@@ -3,7 +3,7 @@
 include 'lib.php';
 
 // 게시물의 총 개수
-$total = 101;
+$total = 101; 
 $limit = 10;
 $page_limit = 5;
 $page = (isset($_GET['page']) && $_GET['page'] != '' && is_numeric($_GET['page'])) ? $_GET['page'] : 1;

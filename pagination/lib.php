@@ -28,7 +28,7 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
             $pagination_str .= "<strong>{$i}</strong> ";
         } else {
             $pagination_str .= "<a href='{$base_url}?page={$i}'>{$i}</a> ";
-        }
+        } 
     }
 
     // Next 링크
