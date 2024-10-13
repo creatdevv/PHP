@@ -1,5 +1,5 @@
 <?php
-
+include 'db.php';
 include 'lib.php';
 
 // 게시물의 총 개수
