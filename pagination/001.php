@@ -18,7 +18,7 @@ for($i = $start; $i < $end; $i++) {
   if (isset($data[$i])) {
     echo $data[$i] . '번 게시글 <br>';
   }
-}
+} 
 
 // 페이지네이션 링크 출력
 echo my_pagination($total, $limit, $page_limit, $page, '001.php');
