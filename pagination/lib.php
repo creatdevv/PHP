@@ -9,13 +9,13 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
         $end_page = $total_page;
     }
 
-    $pagination_str = "";
- ㄴ
+    $pagination_str = "";  // 오타 제거됨
+
     // First 링크
     if ($page > 1) {
         $pagination_str .= "<a href='{$base_url}?page=1'>First</a> ";
     }
- 
+
     // Prev 링크
     $prev_page = $page - 1;
     if ($prev_page >= 1) {
