@@ -58,4 +58,13 @@ if ($page - $jump_page >= 1) {
     return $pagination_str;
 }
 
+// 3. 페이지 이동 입력창 추가
+$pagination_str .= "
+    <form action='{$base_url}' method='GET'>
+        <input type='number' name='page' min='1' max='{$total_page}' value='{$page}' />
+        <input type='submit' value='Go' />
+    </form>
+";
+
+
 ?>
