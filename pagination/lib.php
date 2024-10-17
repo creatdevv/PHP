@@ -11,7 +11,7 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
 
     $pagination_str = "";  // 오타 제거됨
 
-    // 현재 페이지 표시
+    // 1. 현재 페이지 표시
     $pagination_str .= "현재 페이지는 {$page}입니다. ";
 
     // First 링크
@@ -33,6 +33,16 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
             $pagination_str .= "<a href='{$base_url}?page={$i}'>{$i}</a> ";
         } 
     }
+
+    // 2. 몇 페이지씩 건너뛰기 기능 추가
+$jump_page = 5;  // 5페이지씩 점프
+if ($page + $jump_page <= $total_page) {
+    $pagination_str .= "<a href='{$base_url}?page=" . ($page + $jump_page) . "'>+{$jump_page} Pages</a> ";
+}
+if ($page - $jump_page >= 1) {
+    $pagination_str .= "<a href='{$base_url}?page=" . ($page - $jump_page) . "'>-{$jump_page} Pages</a> ";
+}
+
 
     // Next 링크
     $next_page = $page + 1;
