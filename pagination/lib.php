@@ -19,9 +19,11 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
         $pagination_str .= "<a href='{$base_url}?page=1'>First</a> ";
     }
 
-    // Prev 링크
+    // 4-1. Prev 링크 비활성화 추가
     $prev_page = $page - 1;
-    if ($prev_page >= 1) {
+    if ($prev_page < 1) {
+        $pagination_str .= "<span class='disabled'>Prev</span> ";
+    } else {
         $pagination_str .= "<a href='{$base_url}?page={$prev_page}'>Prev</a> ";
     }
 
@@ -44,9 +46,11 @@ if ($page - $jump_page >= 1) {
 }
 
 
-    // Next 링크
+    // 4-2.  Next 링크 비활성화 추가
     $next_page = $page + 1;
-    if ($next_page <= $total_page) {
+    if ($next_page > $total_page) {
+        $pagination_str .= "<span class='disabled'>Next</span> ";
+    } else {
         $pagination_str .= "<a href='{$base_url}?page={$next_page}'>Next</a> ";
     }
 
