@@ -11,6 +11,9 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
 
     $pagination_str = "";  // 오타 제거됨
 
+    // 현재 페이지 표시
+    $pagination_str .= "현재 페이지는 {$page}입니다. ";
+
     // First 링크
     if ($page > 1) {
         $pagination_str .= "<a href='{$base_url}?page=1'>First</a> ";
