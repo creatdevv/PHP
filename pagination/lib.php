@@ -37,14 +37,13 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
     }
 
     // 2. 몇 페이지씩 건너뛰기 기능 추가
-$jump_page = 5;  // 5페이지씩 점프
-if ($page + $jump_page <= $total_page) {
-    $pagination_str .= "<a href='{$base_url}?page=" . ($page + $jump_page) . "'>+{$jump_page} Pages</a> ";
-}
-if ($page - $jump_page >= 1) {
-    $pagination_str .= "<a href='{$base_url}?page=" . ($page - $jump_page) . "'>-{$jump_page} Pages</a> ";
-}
-
+    $jump_page = 5;  // 5페이지씩 점프
+    if ($page + $jump_page <= $total_page) {
+        $pagination_str .= "<a href='{$base_url}?page=" . ($page + $jump_page) . "'>+{$jump_page} Pages</a> ";
+    }
+    if ($page - $jump_page >= 1) {
+        $pagination_str .= "<a href='{$base_url}?page=" . ($page - $jump_page) . "'>-{$jump_page} Pages</a> ";
+    }
 
     // 4-2.  Next 링크 비활성화 추가
     $next_page = $page + 1;
@@ -59,16 +58,15 @@ if ($page - $jump_page >= 1) {
         $pagination_str .= "<a href='{$base_url}?page={$total_page}'>Last</a> ";
     }
 
+    // 3. 페이지 이동 입력창 추가
+    $pagination_str .= "
+        <form action='{$base_url}' method='GET'>
+            <input type='number' name='page' min='1' max='{$total_page}' value='{$page}' />
+            <input type='submit' value='Go' />
+        </form>
+    ";
+
     return $pagination_str;
 }
-
-// 3. 페이지 이동 입력창 추가
-$pagination_str .= "
-    <form action='{$base_url}' method='GET'>
-        <input type='number' name='page' min='1' max='{$total_page}' value='{$page}' />
-        <input type='submit' value='Go' />
-    </form>
-";
-
 
 ?>
