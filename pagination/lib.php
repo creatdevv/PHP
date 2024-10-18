@@ -1,4 +1,8 @@
 <?php
+// PHP 오류 로그 확인
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 function my_pagination($total, $limit, $page_limit, $page, $base_url) {
     $total_page = ceil($total / $limit);
@@ -9,7 +13,9 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
         $end_page = $total_page;
     }
 
-    $pagination_str = "";  // 오타 제거됨
+    $pagination_str = ""; 
+
+    
 
     // 1. 현재 페이지 표시
     $pagination_str .= "현재 페이지는 {$page}입니다. ";
