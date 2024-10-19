@@ -13,9 +13,7 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
         $end_page = $total_page;
     }
 
-    $pagination_str = ""; 
-
-    
+    $pagination_str = "";
 
     // 1. 현재 페이지 표시
     $pagination_str .= "현재 페이지는 {$page}입니다. ";
