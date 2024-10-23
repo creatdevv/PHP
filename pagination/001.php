@@ -2,6 +2,21 @@
 include 'db.php';
 include 'lib.php';
 
+$sql = "SELECT idx, subject, author, rdate FROM freeboard";
+$stmt = $conn->prepare($sql);
+$stmt->setFetchMode(PDO::FETCH_ASSOC);
+$stmt->execute();
+$rs = $stmt->fetchAll();
+
+print_r($rs);
+exit;
+
+foreach($rs as $row) {
+    print_r($row);
+    exit;
+}
+
+
 // 게시물의 총 개수
 $total = 101; 
 $limit = 10;
