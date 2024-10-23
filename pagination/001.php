@@ -8,13 +8,26 @@ $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 $rs = $stmt->fetchAll();
 
-print_r($rs);
-exit;
+// print_r($rs);
+// exit;
+
+echo "<table>";
 
 foreach($rs as $row) {
     print_r($row);
     exit;
+
+    echo "
+    <tr>
+        <td>".$row['idx']."</td>
+        <td>".$row['subject']."</td>
+        <td>".$row['author']."</td>
+        <td>".$row['rdate']."</td>
+    </tr>
+    ";
 }
+
+echo "</table>";
 
 
 // 게시물의 총 개수
