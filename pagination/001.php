@@ -2,6 +2,8 @@
 include 'db.php';
 include 'lib.php';
 
+//!!!!!!페이징처리 할차례~~~
+
 $sql = "SELECT idx, subject, author, rdate FROM freeboard";
 $stmt = $conn->prepare($sql);
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
