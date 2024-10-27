@@ -2,23 +2,22 @@
 include 'db.php';
 include 'lib.php';
 
-//!!!!!!페이징처리 할차례~~~
+// 게시물 총 개수 구함
+$sql = "SELECT COUNT(*) AS cnt FROM freeboard";
+$stmt = $conn->prepare($sql);
+$stmt->setFetchMode(PDO::FETCH_ASSOC);
+$stmt->execute();
+$total = $stmt->fetch()['cnt'];
 
+// 게시물 목록 조회
 $sql = "SELECT idx, subject, author, rdate FROM freeboard";
 $stmt = $conn->prepare($sql);
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 $rs = $stmt->fetchAll();
 
-// print_r($rs);
-// exit;
-
 echo "<table>";
-
 foreach($rs as $row) {
-    print_r($row);
-    exit;
-
     echo "
     <tr>
         <td>".$row['idx']."</td>
@@ -28,17 +27,12 @@ foreach($rs as $row) {
     </tr>
     ";
 }
-
 echo "</table>";
 
-
-// 게시물의 총 개수
-$total = 101; 
+// 페이지네이션 관련 설정
 $limit = 10;
 $page_limit = 5;
 $page = (isset($_GET['page']) && $_GET['page'] != '' && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
-
-$data = range(1, $total); 
 
 $start = ($page - 1) * $limit;
 $end = (($start + $limit) > $total) ? $total : ($start + $limit);
@@ -56,10 +50,10 @@ $end = (($start + $limit) > $total) ? $total : ($start + $limit);
 <?php
 // 게시물 출력
 for($i = $start; $i < $end; $i++) {
-    if (isset($data[$i])) {
-        echo $data[$i] . '번 게시글 <br>';
+    if (isset($rs[$i])) {
+        echo $rs[$i]['idx'] . '번 게시글 - ' . $rs[$i]['subject'] . '<br>';
     }
-} 
+}
 
 // 페이지네이션 링크 출력
 echo my_pagination($total, $limit, $page_limit, $page, '001.php');
