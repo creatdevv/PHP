@@ -15,7 +15,7 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
 
     $pagination_str = "";
 
-    // 1. 현재 페이지 표시
+    // 현재 페이지 표시
     $pagination_str .= "현재 페이지는 {$page}입니다. ";
 
     // First 링크
@@ -23,7 +23,7 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
         $pagination_str .= "<a href='{$base_url}?page=1'>First</a> ";
     }
 
-    // 4-1. Prev 링크 비활성화 추가
+    // Prev 링크 (비활성화 포함)
     $prev_page = $page - 1;
     if ($prev_page < 1) {
         $pagination_str .= "<span class='disabled'>Prev</span> ";
@@ -40,8 +40,8 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
         } 
     }
 
-    // 2. 몇 페이지씩 건너뛰기 기능 추가
-    $jump_page = 5;  // 5페이지씩 점프
+    // 몇 페이지씩 건너뛰기 기능
+    $jump_page = 5;
     if ($page + $jump_page <= $total_page) {
         $pagination_str .= "<a href='{$base_url}?page=" . ($page + $jump_page) . "'>+{$jump_page} Pages</a> ";
     }
@@ -49,7 +49,7 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
         $pagination_str .= "<a href='{$base_url}?page=" . ($page - $jump_page) . "'>-{$jump_page} Pages</a> ";
     }
 
-    // 4-2.  Next 링크 비활성화 추가
+    // Next 링크 (비활성화 포함)
     $next_page = $page + 1;
     if ($next_page > $total_page) {
         $pagination_str .= "<span class='disabled'>Next</span> ";
@@ -62,7 +62,7 @@ function my_pagination($total, $limit, $page_limit, $page, $base_url) {
         $pagination_str .= "<a href='{$base_url}?page={$total_page}'>Last</a> ";
     }
 
-    // 3. 페이지 이동 입력창 추가
+    // 페이지 이동 입력창
     $pagination_str .= "
         <form action='{$base_url}' method='GET'>
             <input type='number' name='page' min='1' max='{$total_page}' value='{$page}' />

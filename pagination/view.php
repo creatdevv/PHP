@@ -1,4 +1,5 @@
 <?php
+// 게시물 상세 보기 페이지
 include 'db.php';
 
 $idx = isset($_GET['idx']) ? intval($_GET['idx']) : 0;

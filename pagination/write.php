@@ -1,4 +1,5 @@
 <?php
+// 게시물 작성 페이지
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -25,15 +26,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>게시물 작성</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기</title>
 </head>
 <body>
-    <form method="post" action="write.php">
-        <label>제목: <input type="text" name="subject" required></label><br>
-        <label>작성자: <input type="text" name="author" required></label><br>
-        <label>내용:<br><textarea name="content" rows="5" required></textarea></label><br>
-        <button type="submit">작성하기</button>
+    <form action="write.php" method="post">
+        <label for="author">작성자:</label>
+        <input type="text" id="author" name="author" required><br>
+
+        <label for="subject">제목:</label>
+        <input type="text" id="subject" name="subject" required><br>
+
+        <label for="content">내용:</label><br>
+        <textarea id="content" name="content" rows="10" cols="50" required></textarea><br>
+
+        <button type="submit">저장</button>
     </form>
-    <a href="001.php">목록으로 돌아가기</a>
 </body>
 </html>
