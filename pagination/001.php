@@ -1,10 +1,22 @@
+<form method="GET" action="001.php">
+    <input type="text" name="search" placeholder="검색어 입력">
+    <button type="submit">검색</button>
+</form>
+
 <?php
 include 'db.php';
 include 'lib.php';
 
-// 검색어와 정렬 설정
+// 검색기능
 $search = isset($_GET['search']) ? $_GET['search'] : '';
-$order = isset($_GET['order']) ? $_GET['order'] : 'rdate DESC';
+$sql = "SELECT idx, subject, author, rdate FROM freeboard WHERE subject LIKE ?";
+$stmt = $conn->prepare($sql);
+$stmt->execute(["%$search%"]);
+$rs = $stmt->fetchAll();
+
+// 검색어와 정렬 설정
+// $search = isset($_GET['search']) ? $_GET['search'] : '';
+// $order = isset($_GET['order']) ? $_GET['order'] : 'rdate DESC';
 
 // 페이지네이션 설정
 $limit = 10; // 페이지당 게시물 수
