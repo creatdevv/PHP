@@ -21,6 +21,9 @@ if ($post) {
     echo "<div>" . nl2br(htmlspecialchars($post['content'])) . "</div>";
 } else {
     echo "존재하지 않는 게시물입니다.";
+
+    // view.php 파일에서 하단에 수정 및 삭제 링크 추가
+echo "<a href='edit.php?id={$id}'>수정</a> | <a href='delete.php?id={$id}'>삭제</a>";
 }
 ?>
 <a href="001.php">목록으로 돌아가기</a>
