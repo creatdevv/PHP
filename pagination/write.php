@@ -21,13 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error: " . $e->getMessage();
     }
 }
-// 검색기능 : 검색 입력창과 검색처리 추가
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-$sql = "SELECT idx, subject, author, rdate FROM freeboard WHERE subject LIKE ?";
-$stmt = $conn->prepare($sql);
-$stmt->execute(["%$search%"]);
-$rs = $stmt->fetchAll();
-
 
 ?>
 
@@ -52,11 +45,7 @@ $rs = $stmt->fetchAll();
         <button type="submit">저장</button>
     </form>
 
-    <!-- 검색기능 : 검색 입력창과 검색처리 추가 -->
-    <form method="GET" action="001.php">
-    <input type="text" name="search" placeholder="검색어 입력">
-    <button type="submit">검색</button>
-</form>
+  
 
 </body>
 </html>

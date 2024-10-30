@@ -7,7 +7,7 @@
 include 'db.php';
 include 'lib.php';
 
-// 검색기능
+// 검색기능 : 검색 입력창과 검색처리 추가
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $sql = "SELECT idx, subject, author, rdate FROM freeboard WHERE subject LIKE ?";
 $stmt = $conn->prepare($sql);
@@ -62,5 +62,12 @@ echo my_pagination($total, $limit, $page_limit, $page, '001.php');
 ?>
 
 <a href="write.php">글쓰기</a>
+
+  <!-- 검색기능 : 검색 입력창과 검색처리 추가 -->
+  <form method="GET" action="001.php">
+    <input type="text" name="search" placeholder="검색어 입력">
+    <button type="submit">검색</button>
+</form>
+
 </body>
 </html>
