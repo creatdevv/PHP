@@ -25,5 +25,9 @@ if ($post) {
     // view.php 파일에서 하단에 수정 및 삭제 링크 추가
 echo "<a href='edit.php?id={$id}'>수정</a> | <a href='delete.php?id={$id}'>삭제</a>";
 }
+
+// 파일 링크 추가
+echo "<a href='uploads/{$filename}'>첨부파일 다운로드</a>";
+
 ?>
 <a href="001.php">목록으로 돌아가기</a>

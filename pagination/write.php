@@ -22,6 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+// 파일첨부기능: 파일저장 로직 추가
+if ($_FILES['upload_file']['error'] == UPLOAD_ERR_OK) {
+    $upload_dir = 'uploads/';
+    $filename = basename($_FILES['upload_file']['name']);
+    $filepath = $upload_dir . $filename;
+
+    if (move_uploaded_file($_FILES['upload_file']['tmp_name'], $filepath)) {
+        echo "파일이 업로드되었습니다.";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit">저장</button>
     </form>
 
+    <!-- 파일첨부기능: 파일 업로드 필드 추가 -->
+    <form method="POST" enctype="multipart/form-data">
+    제목: <input type="text" name="subject"><br>
+    작성자: <input type="text" name="author"><br>
+    내용: <textarea name="content"></textarea><br>
+    파일: <input type="file" name="upload_file"><br>
+    <button type="submit">글 작성</button>
+</form>
   
 
 </body>
