@@ -29,5 +29,26 @@ echo "<a href='edit.php?id={$id}'>수정</a> | <a href='delete.php?id={$id}'>삭
 // 파일 링크 추가
 echo "<a href='uploads/{$filename}'>첨부파일 다운로드</a>";
 
+
+
+// 댓글 목록 표시
+$sql = "SELECT * FROM comments WHERE post_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->execute([$id]);
+$comments = $stmt->fetchAll();
+
+foreach ($comments as $comment) {
+    echo "<p><strong>{$comment['author']}</strong>: {$comment['content']} ({$comment['rdate']})</p>";
+}
+
 ?>
+
 <a href="001.php">목록으로 돌아가기</a>
+
+<!-- 댓글 기능: 댓글 입력 및 표시 -->
+<form method="POST" action="comment.php">
+    <input type="hidden" name="post_id" value="<?= $id ?>">
+    작성자: <input type="text" name="author"><br>
+    내용: <textarea name="content"></textarea><br>
+    <button type="submit">댓글 작성</button>
+</form>
