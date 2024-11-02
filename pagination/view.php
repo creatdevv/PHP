@@ -1,4 +1,11 @@
 <?php
+
+// 조회수 증가
+$sql = "UPDATE freeboard SET views = views + 1 WHERE idx = ?";
+$stmt = $conn->prepare($sql);
+$stmt->execute([$id]);
+
+
 // 게시물 상세 보기 페이지
 include 'db.php';
 

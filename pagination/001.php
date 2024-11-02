@@ -37,14 +37,21 @@ $page_limit = 5;
 $page = (isset($_GET['page']) && $_GET['page'] != '' && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 
-// 게시물 목록 조회
-$sql = "SELECT idx, subject, author, rdate FROM freeboard LIMIT $start, $limit";
+/// 게시물 목록 조회 (조회수 추가)
+$sql = "SELECT idx, subject, author, rdate, views FROM freeboard WHERE subject LIKE ? LIMIT $start, $limit";
 $stmt = $conn->prepare($sql);
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$stmt->execute();
+$stmt->execute(["%$search%"]);
 $rs = $stmt->fetchAll();
 
-echo "<table border='1'>";
+// 게시물 목록 테이블 출력
+echo "<table border='1'>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회수</th> <!-- 조회수 열 추가 -->
+    </tr>";
 foreach($rs as $row) {
     echo "
     <tr>
@@ -52,6 +59,7 @@ foreach($rs as $row) {
         <td><a href='view.php?idx={$row['idx']}'>{$row['subject']}</a></td>
         <td>{$row['author']}</td>
         <td>{$row['rdate']}</td>
+        <td>{$row['views']}</td> <!-- 조회수 표시 -->
     </tr>
     ";
 }
@@ -68,6 +76,7 @@ echo my_pagination($total, $limit, $page_limit, $page, '001.php');
     <input type="text" name="search" placeholder="검색어 입력">
     <button type="submit">검색</button>
 </form>
+
 
 </body>
 </html>
