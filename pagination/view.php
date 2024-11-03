@@ -5,6 +5,20 @@ $sql = "UPDATE freeboard SET views = views + 1 WHERE idx = ?";
 $stmt = $conn->prepare($sql);
 $stmt->execute([$id]);
 
+// 조회할 게시물 ID
+$idx = isset($_GET['idx']) ? $_GET['idx'] : 0;
+
+// 조회수 증가
+$update_sql = "UPDATE freeboard SET views = views + 1 WHERE idx = ?";
+$update_stmt = $conn->prepare($update_sql);
+$update_stmt->execute([$idx]);
+
+// 게시물 조회
+$sql = "SELECT idx, subject, author, content, rdate, views FROM freeboard WHERE idx = ?";
+$stmt = $conn->prepare($sql);
+$stmt->execute([$idx]);
+$post = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 // 게시물 상세 보기 페이지
 include 'db.php';
@@ -49,6 +63,16 @@ foreach ($comments as $comment) {
 }
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
 
 <a href="001.php">목록으로 돌아가기</a>
 
@@ -59,3 +83,11 @@ foreach ($comments as $comment) {
     내용: <textarea name="content"></textarea><br>
     <button type="submit">댓글 작성</button>
 </form>
+
+<h2><?php echo htmlspecialchars($post['subject']); ?></h2>
+    <p>작성자: <?php echo htmlspecialchars($post['author']); ?> | 작성일: <?php echo htmlspecialchars($post['rdate']); ?> | 조회수: <?php echo htmlspecialchars($post['views']); ?></p>
+    <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
+    <a href="001.php">목록으로 돌아가기</a>
+
+</body>
+</html>
