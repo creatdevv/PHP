@@ -1,5 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 목록</title>
+</head>
+<body>
+
+<!-- 검색 입력창 -->
 <form method="GET" action="001.php">
-    <input type="text" name="search" placeholder="검색어 입력">
+    <input type="text" name="search" placeholder="검색어 입력" value="<?= htmlspecialchars($search) ?>">
     <button type="submit">검색</button>
 </form>
 
@@ -7,38 +17,23 @@
 include 'db.php';
 include 'lib.php';
 
-// 검색기능 : 검색 입력창과 검색처리 추가
+// 검색어 처리
 $search = isset($_GET['search']) ? $_GET['search'] : '';
-$sql = "SELECT idx, subject, author, rdate FROM freeboard WHERE subject LIKE ?";
-$stmt = $conn->prepare($sql);
-$stmt->execute(["%$search%"]);
-$rs = $stmt->fetchAll();
-
-// 검색어와 정렬 설정
-// $search = isset($_GET['search']) ? $_GET['search'] : '';
-// $order = isset($_GET['order']) ? $_GET['order'] : 'rdate DESC';
 
 // 페이지네이션 설정
 $limit = 10; // 페이지당 게시물 수
 $page_limit = 5; // 표시할 페이지 번호 개수
-$page = (isset($_GET['page']) && $_GET['page'] != '' && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
+$page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
 $start = ($page - 1) * $limit;
 
-// 게시물 총 개수 구함
-$sql = "SELECT COUNT(*) AS cnt FROM freeboard";
+// 검색어에 따른 게시물 총 개수 구함
+$sql = "SELECT COUNT(*) AS cnt FROM freeboard WHERE subject LIKE ?";
 $stmt = $conn->prepare($sql);
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$stmt->execute();
-$total = $stmt->fetch()['cnt'];
+$stmt->execute(["%$search%"]);
+$total = $stmt->fetchColumn();
 
-// 페이지네이션 관련 설정
-$limit = 10;
-$page_limit = 5;
-$page = (isset($_GET['page']) && $_GET['page'] != '' && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
-$start = ($page - 1) * $limit;
-
-/// 게시물 목록 조회 (조회수 추가)
-$sql = "SELECT idx, subject, author, rdate, views FROM freeboard WHERE subject LIKE ? LIMIT $start, $limit";
+// 게시물 목록 조회 (조회수 추가)
+$sql = "SELECT idx, subject, author, rdate, views FROM freeboard WHERE subject LIKE ? ORDER BY rdate DESC LIMIT $start, $limit";
 $stmt = $conn->prepare($sql);
 $stmt->execute(["%$search%"]);
 $rs = $stmt->fetchAll();
@@ -66,17 +61,10 @@ foreach($rs as $row) {
 echo "</table>";
 
 // 페이지네이션 링크 출력
-echo my_pagination($total, $limit, $page_limit, $page, '001.php');
+echo my_pagination($total, $limit, $page_limit, $page, '001.php?search=' . urlencode($search));
 ?>
 
 <a href="write.php">글쓰기</a>
-
-  <!-- 검색기능 : 검색 입력창과 검색처리 추가 -->
-  <form method="GET" action="001.php">
-    <input type="text" name="search" placeholder="검색어 입력">
-    <button type="submit">검색</button>
-</form>
-
 
 </body>
 </html>
