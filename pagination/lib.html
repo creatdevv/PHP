@@ -4,11 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>페이지네이션 예시</title>
+    <style>
+        /* 페이지네이션 스타일 */
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination li {
+            margin: 0 5px;
+        }
+        .pagination a {
+            text-decoration: none;
+            color: #007bff;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .pagination .active a {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+    </style>
 </head>
 <body>
 
 <?php
-// 여기에 페이지네이션을 출력하는 PHP 코드 삽입
+// 기본 URL을 설정합니다. 필요에 따라 $base_url을 수정하세요.
+$base_url = '001.php';
+
+// 페이지네이션을 출력하는 함수 호출
 echo my_pagination($total, $limit, $page_limit, $page, $base_url);
 ?>
 
