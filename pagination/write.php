@@ -1,38 +1,48 @@
 <?php
-
-// 게시물 작성 페이지
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $subject = $_POST['subject'] ?? '';
     $content = $_POST['content'] ?? '';
     $author = $_POST['author'] ?? '';
+    $filename = '';
 
     try {
-        $sql = "INSERT INTO freeboard (subject, content, author, rdate) VALUES (:subject, :content, :author, NOW())";
+        // 파일 업로드 로직 추가
+        if (isset($_FILES['upload_file']) && $_FILES['upload_file']['error'] == UPLOAD_ERR_OK) {
+            $upload_dir = 'uploads/';
+            $original_filename = basename($_FILES['upload_file']['name']);
+            $file_ext = pathinfo($original_filename, PATHINFO_EXTENSION);
+
+            // 허용된 파일 확장자 검사
+            $allowed_extensions = ['jpg', 'png', 'gif', 'pdf', 'txt'];
+            if (!in_array(strtolower($file_ext), $allowed_extensions)) {
+                throw new Exception("허용되지 않는 파일 형식입니다.");
+            }
+
+            // 고유한 파일명 생성 및 파일 저장
+            $filename = uniqid() . '.' . $file_ext;
+            $filepath = $upload_dir . $filename;
+            if (!move_uploaded_file($_FILES['upload_file']['tmp_name'], $filepath)) {
+                throw new Exception("파일 업로드에 실패했습니다.");
+            }
+        }
+
+        // 게시물 삽입
+        $sql = "INSERT INTO freeboard (subject, content, author, rdate, filename) VALUES (:subject, :content, :author, NOW(), :filename)";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':subject', $subject, PDO::PARAM_STR);
         $stmt->bindValue(':content', $content, PDO::PARAM_STR);
         $stmt->bindValue(':author', $author, PDO::PARAM_STR);
+        $stmt->bindValue(':filename', $filename, PDO::PARAM_STR);
         $stmt->execute();
+
         header("Location: 001.php");
         exit;
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
 }
-
-// 파일첨부기능: 파일저장 로직 추가
-if ($_FILES['upload_file']['error'] == UPLOAD_ERR_OK) {
-    $upload_dir = 'uploads/';
-    $filename = basename($_FILES['upload_file']['name']);
-    $filepath = $upload_dir . $filename;
-
-    if (move_uploaded_file($_FILES['upload_file']['tmp_name'], $filepath)) {
-        echo "파일이 업로드되었습니다.";
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +53,8 @@ if ($_FILES['upload_file']['error'] == UPLOAD_ERR_OK) {
     <title>글쓰기</title>
 </head>
 <body>
-    <form action="write.php" method="post">
+    <h2>게시물 작성</h2>
+    <form action="write.php" method="post" enctype="multipart/form-data">
         <label for="author">작성자:</label>
         <input type="text" id="author" name="author" required><br>
 
@@ -53,18 +64,10 @@ if ($_FILES['upload_file']['error'] == UPLOAD_ERR_OK) {
         <label for="content">내용:</label><br>
         <textarea id="content" name="content" rows="10" cols="50" required></textarea><br>
 
+        <label for="upload_file">파일:</label>
+        <input type="file" name="upload_file"><br><br>
+
         <button type="submit">저장</button>
     </form>
-
-    <!-- 파일첨부기능: 파일 업로드 필드 추가 -->
-    <form method="POST" enctype="multipart/form-data">
-    제목: <input type="text" name="subject"><br>
-    작성자: <input type="text" name="author"><br>
-    내용: <textarea name="content"></textarea><br>
-    파일: <input type="file" name="upload_file"><br>
-    <button type="submit">글 작성</button>
-</form>
-  
-
 </body>
 </html>
