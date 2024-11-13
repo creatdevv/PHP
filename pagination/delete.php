@@ -22,3 +22,18 @@ try {
     exit;
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 삭제</title>
+</head>
+<body>
+    <p>정말 삭제하시겠습니까?</p>
+    <form action="delete.php?idx=<?= $idx ?>" method="post">
+        <button type="submit">삭제</button>
+        <a href="view.php?idx=<?= $idx ?>">취소</a>
+    </form>
+</body>
+</html>
