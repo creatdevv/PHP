@@ -1,35 +1,6 @@
 <?php
 include 'db.php';
 
-$limit = 5; // 페이지당 표시할 게시물 수
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-// 페이징을 고려한 쿼리
-$sql .= " LIMIT :limit OFFSET :offset";
-$stmt = $conn->prepare($sql);
-$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-$stmt->execute();
-$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// 총 게시물 수 조회
-$count_sql = "SELECT COUNT(*) FROM posts WHERE (title LIKE :keyword OR content LIKE :keyword)";
-if ($search_category !== '') {
-    $count_sql .= " AND category = :category";
-}
-$count_stmt = $conn->prepare($count_sql);
-$count_stmt->bindValue(':keyword', '%' . $search_keyword . '%', PDO::PARAM_STR);
-if ($search_category !== '') {
-    $count_stmt->bindValue(':category', $search_category, PDO::PARAM_STR);
-}
-$count_stmt->execute();
-$total_count = $count_stmt->fetchColumn();
-
-$total_pages = ceil($total_count / $limit); // 총 페이지 수
-
-
-
 // 검색어와 카테고리 가져오기
 $search_keyword = isset($_GET['q']) ? trim($_GET['q']) : '';
 $search_category = isset($_GET['category']) ? $_GET['category'] : '';
