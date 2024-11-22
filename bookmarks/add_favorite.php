@@ -23,3 +23,15 @@ try {
     }
 }
 ?>
+
+<!-- #데이터 베이스 테이블 생성: SQL
+CREATE TABLE favorites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL, -- 사용자 ID
+    item_id INT NOT NULL, -- 즐겨찾기 대상 ID (게시글 ID 등)
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 추가 날짜
+    UNIQUE (user_id, item_id) -- 중복 방지
+);
+ 
+
+-->
