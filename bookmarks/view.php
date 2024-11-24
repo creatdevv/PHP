@@ -1,8 +1,14 @@
 <?php
 include 'db.php';
+include 'log_activity.php'; // 로그 기록 함수 포함
 
 // 조회할 게시물 ID
 $idx = isset($_GET['idx']) ? intval($_GET['idx']) : 0;
+
+// 사용자 활동 로그 기록
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0; // 비회원은 0으로 처리
+log_activity($user_id, "게시물 조회", "view.php?idx={$idx}");
+
 
 try {
     // 조회수 증가
