@@ -18,7 +18,9 @@ function log_activity($user_id, $action, $page) {
         echo "Error logging activity: " . $e->getMessage();
     }
 }
+
 ?>
+
 
 <!-- 데이터베이스 테이블 생성
 CREATE TABLE user_logs (
@@ -29,5 +31,5 @@ CREATE TABLE user_logs (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ip_address VARCHAR(50)
 );
- 
+
 -->
