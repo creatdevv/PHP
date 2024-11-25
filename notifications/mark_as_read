@@ -1,0 +1,9 @@
+<?php
+function mark_as_read($notification_id) {
+    global $conn;
+    $sql = "UPDATE notifications SET is_read = 1 WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':id', $notification_id, PDO::PARAM_INT);
+    $stmt->execute();
+}
+?>
