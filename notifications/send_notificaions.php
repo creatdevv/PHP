@@ -13,3 +13,11 @@ try {
     echo "에러 발생: " . $e->getMessage();
 }
 ?>
+
+
+<!-- sql 쿼리문
+INSERT INTO notifications (user_id, message) VALUES
+(1, '새로운 댓글이 달렸습니다.'),
+(1, '회원님의 게시글이 좋아요를 받았습니다.'),
+(2, '새로운 메시지가 도착했습니다.'); 
+-->
