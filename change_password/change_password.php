@@ -90,6 +90,32 @@ echo "암호가 성공적으로 변경되었으며, 이메일로 알림을 발�
 </body>
 </html>
 
+<label for="new_password">새 암호:</label><br>
+<input type="password" id="new_password" name="new_password" required onkeyup="checkPasswordStrength()"><br>
+<small id="password_strength"></small><br><br>
+
+<script>
+function checkPasswordStrength() {
+    const strengthText = document.getElementById('password_strength');
+    const password = document.getElementById('new_password').value;
+    const regexWeak = /[a-zA-Z]/;
+    const regexStrong = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])/;
+
+    if (password.length < 6) {
+        strengthText.textContent = "너무 짧습니다.";
+        strengthText.style.color = "red";
+    } else if (regexWeak.test(password)) {
+        strengthText.textContent = "보통입니다.";
+        strengthText.style.color = "orange";
+    } 
+    if (regexStrong.test(password)) {
+        strengthText.textContent = "강력합니다!";
+        strengthText.style.color = "green";
+    }
+}
+</script>
+
+
 <!-- #SQL 문
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
