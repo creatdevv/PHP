@@ -44,6 +44,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "오류가 발생했습니다: " . $e->getMessage();
     }
 }
+
+// 새 암호 해싱 및 업데이트 후 이메일 알림 발송
+$hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
+$update_sql = "UPDATE users SET password = :password WHERE id = :id";
+$update_stmt = $conn->prepare($update_sql);
+$update_stmt->bindValue(':password', $hashed_password, PDO::PARAM_STR);
+$update_stmt->bindValue(':id', $user_id, PDO::PARAM_INT);
+$update_stmt->execute();
+
+// 이메일 발송
+$user_email = "user@example.com"; // 사용자 이메일 가져오기 (DB에서 조회할 수 있음)
+$subject = "암호 변경 알림";
+$message = "안녕하세요, 암호가 성공적으로 변경되었습니다. 문의사항이 있으시면 고객센터에 연락해 주세요.";
+$headers = "From: no-reply@yourwebsite.com";
+
+mail($user_email, $subject, $message, $headers);
+
+echo "암호가 성공적으로 변경되었으며, 이메일로 알림을 발송했습니다.";
+
+
 ?>
 
 <!DOCTYPE html>
