@@ -3,7 +3,13 @@ session_start();
 include 'db.php';
 include 'notification_functions.php';
 
-$user_id = $_SESSION['user_id']; // 로그인한 사용자 ID 가져오기
+// 로그인 여부 확인
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
 $notifications = get_notifications($user_id);
 ?>
 
@@ -16,7 +22,7 @@ $notifications = get_notifications($user_id);
 </head>
 <body>
     <h1>알림</h1>
-    <?php if (count($notifications) > 0): ?>
+    <?php if (!empty($notifications)): ?>
         <ul>
             <?php foreach ($notifications as $notification): ?>
                 <li style="<?= $notification['is_read'] ? 'color: gray;' : 'font-weight: bold;' ?>">
