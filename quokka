@@ -1,5 +1,0 @@
-const chest = require('quokka-treasure-chest');
-
-// 잘못된 키를 넣어보고 힌트를 확인하세요.
-const hint = chest.open('wrong_key'); //? 
-console.log(hint); // 힌트 출력
