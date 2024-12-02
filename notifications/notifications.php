@@ -9,6 +9,11 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// CSRF 토큰 생성 및 저장
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $user_id = $_SESSION['user_id'];
 $notifications = get_notifications($user_id);
 ?>
@@ -31,6 +36,7 @@ $notifications = get_notifications($user_id);
                     <?php if (!$notification['is_read']): ?>
                         <form method="POST" action="mark_read.php" style="display:inline;">
                             <input type="hidden" name="notification_id" value="<?= $notification['id'] ?>">
+                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                             <button type="submit">읽음 처리</button>
                         </form>
                     <?php endif; ?>
