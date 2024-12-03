@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// CSRF 토큰 생성 및 저장
+// CSRF 토큰 생성
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -24,18 +24,64 @@ $notifications = get_notifications($user_id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>알림</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .read {
+            color: gray;
+            background-color: #e0e0e0;
+        }
+        .unread {
+            font-weight: bold;
+            background-color: #fffbcc;
+        }
+        form {
+            display: inline;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>알림</h1>
     <?php if (!empty($notifications)): ?>
         <ul>
             <?php foreach ($notifications as $notification): ?>
-                <li style="<?= $notification['is_read'] ? 'color: gray;' : 'font-weight: bold;' ?>">
-                    <?= htmlspecialchars($notification['message']) ?>
-                    <small>(<?= $notification['created_at'] ?>)</small>
+                <li class="<?= $notification['is_read'] ? 'read' : 'unread' ?>">
+                    <?= htmlspecialchars($notification['message'], ENT_QUOTES, 'UTF-8') ?>
+                    <small>(<?= htmlspecialchars($notification['created_at'], ENT_QUOTES, 'UTF-8') ?>)</small>
                     <?php if (!$notification['is_read']): ?>
-                        <form method="POST" action="mark_read.php" style="display:inline;">
-                            <input type="hidden" name="notification_id" value="<?= $notification['id'] ?>">
+                        <form method="POST" action="mark_read.php">
+                            <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notification['id']) ?>">
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                             <button type="submit">읽음 처리</button>
                         </form>
@@ -46,5 +92,12 @@ $notifications = get_notifications($user_id);
     <?php else: ?>
         <p>알림이 없습니다.</p>
     <?php endif; ?>
+
+    <!-- 로그아웃 버튼 -->
+    <div class="logout">
+        <form method="POST" action="logout.php">
+            <button type="submit">로그아웃</button>
+        </form>
+    </div>
 </body>
 </html>
