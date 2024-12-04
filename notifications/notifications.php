@@ -9,13 +9,27 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// CSRF 토큰 생성
+// CSRF 토큰 생성 (세션에 토큰이 없을 경우 생성)
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
 $user_id = $_SESSION['user_id'];
 $notifications = get_notifications($user_id);
+
+// POST 요청 처리
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF 토큰 검증 실패.");
+    }
+
+    $notification_id = filter_input(INPUT_POST, 'notification_id', FILTER_VALIDATE_INT);
+    if ($notification_id) {
+        mark_as_read($notification_id);
+        header("Location: notifications.php");
+        exit;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -80,7 +94,7 @@ $notifications = get_notifications($user_id);
                     <?= htmlspecialchars($notification['message'], ENT_QUOTES, 'UTF-8') ?>
                     <small>(<?= htmlspecialchars($notification['created_at'], ENT_QUOTES, 'UTF-8') ?>)</small>
                     <?php if (!$notification['is_read']): ?>
-                        <form method="POST" action="mark_read.php">
+                        <form method="POST" action="">
                             <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notification['id']) ?>">
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                             <button type="submit">읽음 처리</button>
@@ -96,6 +110,7 @@ $notifications = get_notifications($user_id);
     <!-- 로그아웃 버튼 -->
     <div class="logout">
         <form method="POST" action="logout.php">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             <button type="submit">로그아웃</button>
         </form>
     </div>
