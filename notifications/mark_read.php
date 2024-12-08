@@ -17,11 +17,17 @@ if (empty($_SESSION['csrf_token'])) {
 $user_id = $_SESSION['user_id'];
 
 // 알림 데이터 가져오기
-$notifications = get_notifications($user_id);
+try {
+    $notifications = get_notifications($user_id);
+} catch (Exception $e) {
+    error_log("알림 가져오기 실패: " . $e->getMessage());
+    $notifications = [];
+}
 
 // POST 요청 처리
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        http_response_code(403);
         die("CSRF 토큰 검증 실패.");
     }
 
@@ -34,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    header("Location: notifications.php");
+    header("Location: mark_read.php");
     exit;
 }
 ?>
