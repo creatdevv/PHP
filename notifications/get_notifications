@@ -16,11 +16,10 @@ if (empty($_SESSION['csrf_token'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// 알림 가져오는 함수
+// 알림 가져오기 함수
 function get_notifications($user_id) {
     global $conn;
     $sql = "SELECT id, message, is_read, created_at FROM notifications WHERE user_id = :user_id ORDER BY created_at DESC";
-    
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
@@ -41,52 +40,7 @@ $notifications = get_notifications($user_id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>알림</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            color: #333;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            background-color: #fff;
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .read {
-            color: gray;
-            background-color: #e0e0e0;
-        }
-        .unread {
-            font-weight: bold;
-            background-color: #fffbcc;
-        }
-        form {
-            display: inline;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .logout {
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>알림</h1>
