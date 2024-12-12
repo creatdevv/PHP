@@ -8,9 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("CSRF 토큰 검증 실패. 다시 로그인하세요.");
     }
 
-    $user_id = $_SESSION['user_id'];
+    $notification_id = $_POST['notification_id'];
     try {
-        update_notifications('all', $user_id, $conn); // 모든 알림 읽음 처리
+        update_notifications('single', $notification_id, $conn); // 개별 알림 읽음 처리
         header("Location: notifications.php");
         exit;
     } catch (Exception $e) {
