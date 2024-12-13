@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// CSRF 토큰 생성 (세션 시작 시 한 번만 생성)
+// CSRF 토큰 생성
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -35,12 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($notification_id) {
         try {
             mark_as_read($notification_id);
+            echo json_encode(['status' => 'success']);
         } catch (Exception $e) {
             error_log("알림 읽음 처리 실패: " . $e->getMessage());
+            echo json_encode(['status' => 'error', 'message' => '알림 처리 중 오류 발생.']);
         }
     }
-
-    header("Location: mark_read.php");
     exit;
 }
 ?>
@@ -89,21 +89,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #0056b3;
         }
     </style>
+    <script>
+        async function markAsRead(notificationId, csrfToken) {
+            try {
+                const response = await fetch('mark_read.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        notification_id: notificationId,
+                        csrf_token: csrfToken
+                    })
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    document.getElementById(`notification-${notificationId}`).classList.add('read');
+                } else {
+                    alert(result.message || '알림 처리 중 오류가 발생했습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>알림</h1>
     <?php if (!empty($notifications)): ?>
         <ul>
             <?php foreach ($notifications as $notification): ?>
-                <li class="<?= $notification['is_read'] ? 'read' : 'unread' ?>">
+                <li id="notification-<?= htmlspecialchars($notification['id'], ENT_QUOTES, 'UTF-8') ?>" class="<?= $notification['is_read'] ? 'read' : 'unread' ?>">
                     <?= htmlspecialchars($notification['message'], ENT_QUOTES, 'UTF-8') ?>
                     <small>(<?= htmlspecialchars($notification['created_at'], ENT_QUOTES, 'UTF-8') ?>)</small>
                     <?php if (!$notification['is_read']): ?>
-                        <form method="POST" action="">
-                            <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notification['id'], ENT_QUOTES, 'UTF-8') ?>">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-                            <button type="submit">읽음 처리</button>
-                        </form>
+                        <button onclick="markAsRead(<?= htmlspecialchars($notification['id'], ENT_QUOTES, 'UTF-8') ?>, '<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>')">읽음 처리</button>
                     <?php endif; ?>
                 </li>
             <?php endforeach; ?>
