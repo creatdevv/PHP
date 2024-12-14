@@ -9,31 +9,47 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// CSRF 토큰 생성 (세션에 토큰이 없을 경우 생성)
+// CSRF 토큰 생성
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
 $user_id = $_SESSION['user_id'];
-$notifications = get_notifications($user_id);
 
-// POST 요청 처리
+// 알림 데이터 가져오기
+try {
+    $notifications = get_notifications($user_id);
+} catch (Exception $e) {
+    error_log("알림 가져오기 실패: " . $e->getMessage());
+    $notifications = [];
+}
+
+// 알림 읽음 처리 Ajax 요청 처리
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        session_unset();
-        session_destroy();
-        die("CSRF 토큰 검증 실패. 다시 로그인하세요.");
-    }
+    header('Content-Type: application/json; charset=UTF-8');
+    $input = json_decode(file_get_contents('php://input'), true);
 
-    $notification_id = filter_input(INPUT_POST, 'notification_id', FILTER_VALIDATE_INT);
-    if ($notification_id) {
-        mark_as_read($notification_id);
-        header("Location: notifications.php");
+    if (!isset($input['csrf_token']) || $input['csrf_token'] !== $_SESSION['csrf_token']) {
+        http_response_code(403);
+        echo json_encode(['status' => 'error', 'message' => 'CSRF 토큰 검증 실패']);
         exit;
     }
+
+    $notification_id = filter_var($input['notification_id'], FILTER_VALIDATE_INT);
+    if ($notification_id) {
+        try {
+            mark_as_read($notification_id);
+            echo json_encode(['status' => 'success', 'message' => '알림이 읽음 처리되었습니다.']);
+        } catch (Exception $e) {
+            error_log("알림 읽음 처리 실패: " . $e->getMessage());
+            echo json_encode(['status' => 'error', 'message' => '알림 읽음 처리 중 오류 발생']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => '잘못된 알림 ID']);
+    }
+    exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -43,83 +59,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
         }
         h1 {
             color: #333;
         }
         ul {
-            list-style: none;
+            list-style-type: none;
             padding: 0;
         }
         li {
             background-color: #fff;
             margin: 10px 0;
-            padding: 15px;
+            padding: 10px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
         .read {
             color: gray;
-            background-color: #e0e0e0;
         }
         .unread {
             font-weight: bold;
-            background-color: #fffbcc;
-        }
-        form {
-            display: inline;
         }
         button {
             background-color: #007bff;
-            color: white;
+            color: #fff;
             border: none;
             padding: 5px 10px;
-            border-radius: 3px;
             cursor: pointer;
+            border-radius: 3px;
         }
         button:hover {
             background-color: #0056b3;
         }
-        .logout {
-            margin-top: 20px;
-        }
     </style>
+    <script>
+        async function markAsRead(notificationId, csrfToken) {
+            try {
+                const response = await fetch('notification.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        notification_id: notificationId,
+                        csrf_token: csrfToken
+                    })
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    document.getElementById(`notification-${notificationId}`).classList.add('read');
+                } else {
+                    alert(result.message || '알림 처리 중 오류가 발생했습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>알림</h1>
     <?php if (!empty($notifications)): ?>
         <ul>
             <?php foreach ($notifications as $notification): ?>
-                <li class="<?= $notification['is_read'] ? 'read' : 'unread' ?>">
+                <li id="notification-<?= htmlspecialchars($notification['id'], ENT_QUOTES, 'UTF-8') ?>" class="<?= $notification['is_read'] ? 'read' : 'unread' ?>">
                     <?= htmlspecialchars($notification['message'], ENT_QUOTES, 'UTF-8') ?>
                     <small>(<?= htmlspecialchars($notification['created_at'], ENT_QUOTES, 'UTF-8') ?>)</small>
                     <?php if (!$notification['is_read']): ?>
-                        <form method="POST" action="">
-                            <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notification['id'], ENT_QUOTES, 'UTF-8') ?>">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-                            <button type="submit">읽음 처리</button>
-                        </form>
+                        <button onclick="markAsRead(<?= htmlspecialchars($notification['id'], ENT_QUOTES, 'UTF-8') ?>, '<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>')">읽음 처리</button>
                     <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
-        <!-- 모두 읽음 처리 버튼 -->
-        <form method="POST" action="mark_all_read.php">
-            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-            <button type="submit">모두 읽음 처리</button>
-        </form>
     <?php else: ?>
         <p>알림이 없습니다.</p>
     <?php endif; ?>
-
-    <!-- 로그아웃 버튼 -->
-    <div class="logout">
-        <form method="POST" action="logout.php">
-            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-            <button type="submit">로그아웃</button>
-        </form>
-    </div>
 </body>
 </html>
