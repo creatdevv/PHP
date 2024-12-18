@@ -10,7 +10,7 @@ function check_db_connection() {
     global $conn;
 
     if (!$conn) {
-        error_log("데이터베이스 연결 실패: " . $conn->errorInfo()[2]);
+        error_log("데이터베이스 연결 실패: " . ($conn->errorInfo()[2] ?? '알 수 없는 오류'));
         die("데이터베이스 연결 실패: 관리자에게 문의하세요.");
     }
 }
@@ -30,12 +30,12 @@ function notify_user($user_id, $message) {
 
     // 유효성 검사
     if (!is_int($user_id) || $user_id <= 0) {
-        error_log("유효하지 않은 사용자 ID: " . $user_id);
+        error_log("유효하지 않은 사용자 ID: " . json_encode($user_id));
         return false;
     }
 
     if (empty($message) || strlen($message) > 255) {
-        error_log("유효하지 않은 메시지: " . $message);
+        error_log("유효하지 않은 메시지: " . json_encode($message));
         return false;
     }
 
@@ -45,7 +45,7 @@ function notify_user($user_id, $message) {
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':message', $message, PDO::PARAM_STR);
         $stmt->execute();
-        error_log("알림이 성공적으로 추가되었습니다: 사용자 ID $user_id");
+        error_log("알림이 성공적으로 추가되었습니다: 사용자 ID $user_id, 메시지: $message");
         return true;
     } catch (PDOException $e) {
         error_log("알림 삽입 중 오류: " . $e->getMessage());
@@ -67,6 +67,7 @@ if ($enable_test) {
         }
     } catch (Exception $e) {
         error_log("테스트 알림 삽입 중 오류: " . $e->getMessage());
+        echo "테스트 알림 처리 중 오류가 발생했습니다.";
     }
 }
 ?>
