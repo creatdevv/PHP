@@ -50,13 +50,22 @@ $notifications = get_notifications($user_id);
                 <li class="<?= $notification['is_read'] ? 'read' : 'unread' ?>">
                     <?= htmlspecialchars($notification['message'], ENT_QUOTES, 'UTF-8') ?>
                     <small>(<?= htmlspecialchars($notification['created_at'], ENT_QUOTES, 'UTF-8') ?>)</small>
-                    <?php if (!$notification['is_read']): ?>
-                        <form method="POST" action="mark_read.php">
+                    <div class="actions">
+                        <?php if (!$notification['is_read']): ?>
+                            <!-- 읽음 처리 -->
+                            <form method="POST" action="mark_read.php" style="display:inline;">
+                                <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notification['id'], ENT_QUOTES, 'UTF-8') ?>">
+                                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                                <button type="submit">읽음 처리</button>
+                            </form>
+                        <?php endif; ?>
+                        <!-- 삭제 기능 -->
+                        <form method="POST" action="delete_notification.php" style="display:inline;">
                             <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notification['id'], ENT_QUOTES, 'UTF-8') ?>">
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                            <button type="submit">읽음 처리</button>
+                            <button type="submit">삭제</button>
                         </form>
-                    <?php endif; ?>
+                    </div>
                 </li>
             <?php endforeach; ?>
         </ul>
