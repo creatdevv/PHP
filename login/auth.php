@@ -9,6 +9,12 @@ include 'db.php';
  * @param string $password 비밀번호
  * @return bool 성공 여부
  */
+
+// - register_user: 사용자 이름과 비밀번호를 받아 회원가입 처리.
+// - login_user: 사용자 이름과 비밀번호를 받아 로그인 처리. 성공 시 세션에 정보 저장.
+// - logout_user: 세션을 정리하여 로그아웃.
+ 
+
 function register_user($username, $password) {
     global $conn;
 

@@ -19,3 +19,6 @@ if (login_user("test_user", "password123")) {
 logout_user();
 echo "로그아웃 완료.<br>";
 ?>
+
+<!--[보안] 비밀번호는 password_hash를 사용하여 안전하게 저장.
+          비밀번호 검증은 password_verify를 사용. -->
