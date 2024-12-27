@@ -7,7 +7,7 @@ if (register_user("new_user", "password123")) {
 } else {
     echo "회원가입 실패.<br>";
 }
-
+ 
 // 로그인 테스트
 if (login_user("new_user", "password123")) {
     echo "로그인 성공! 환영합니다, " . $_SESSION['username'] . ".<br>";
