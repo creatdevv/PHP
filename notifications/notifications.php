@@ -115,6 +115,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         button:hover {
             background-color: #0056b3;
         }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
     </style>
     <script>
         async function sendRequest(action, data = {}) {
@@ -165,6 +179,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 </head>
 <body>
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <div class="success-message">
+            <?= htmlspecialchars($_SESSION['success_message'], ENT_QUOTES, 'UTF-8') ?>
+        </div>
+        <?php unset($_SESSION['success_message']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error_message'])): ?>
+        <div class="error-message">
+            <?= htmlspecialchars($_SESSION['error_message'], ENT_QUOTES, 'UTF-8') ?>
+        </div>
+        <?php unset($_SESSION['error_message']); ?>
+    <?php endif; ?>
+
     <h1>알림</h1>
     <button onclick="markAllAsRead()">모든 알림 읽음 처리</button>
     <?php if (!empty($notifications)): ?>
