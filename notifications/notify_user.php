@@ -48,7 +48,7 @@ function notify_user($user_id, $message) {
 
     try {
         // 알림 삽입 SQL 작성 및 실행
-        $sql = "INSERT INTO notifications (user_id, message) VALUES (:user_id, :message)";
+        $sql = "INSERT INTO notifications (user_id, message, is_read) VALUES (:user_id, :message, 0)";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':message', $message, PDO::PARAM_STR);
@@ -56,6 +56,50 @@ function notify_user($user_id, $message) {
         return true;
     } catch (PDOException $e) {
         error_log("알림 삽입 중 오류: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * 알림 상태 업데이트 함수
+ *
+ * @param int $notification_id 알림 ID
+ * @param bool $is_read 읽음 상태
+ * @return bool 성공 여부
+ */
+function update_notification_status($notification_id, $is_read) {
+    global $conn;
+
+    try {
+        $sql = "UPDATE notifications SET is_read = :is_read WHERE id = :notification_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':notification_id', $notification_id, PDO::PARAM_INT);
+        $stmt->bindValue(':is_read', $is_read ? 1 : 0, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
+    } catch (PDOException $e) {
+        error_log("알림 상태 업데이트 중 오류: " . $e->getMessage());
+        return false;
+    }
+}
+
+/**
+ * 알림 삭제 함수
+ *
+ * @param int $notification_id 알림 ID
+ * @return bool 성공 여부
+ */
+function delete_notification($notification_id) {
+    global $conn;
+
+    try {
+        $sql = "DELETE FROM notifications WHERE id = :notification_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':notification_id', $notification_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
+    } catch (PDOException $e) {
+        error_log("알림 삭제 중 오류: " . $e->getMessage());
         return false;
     }
 }
@@ -78,7 +122,8 @@ function log_notification($user_id) {
 
         echo "<h3>사용자 ID {$user_id}의 최근 알림</h3>";
         foreach ($notifications as $notification) {
-            echo "<p>{$notification['message']} (생성일: {$notification['created_at']})</p>";
+            $status = $notification['is_read'] ? "읽음" : "읽지 않음";
+            echo "<p>{$notification['message']} (상태: {$status}, 생성일: {$notification['created_at']})</p>";
         }
     } catch (PDOException $e) {
         error_log("알림 로그 조회 중 오류: " . $e->getMessage());
@@ -96,6 +141,17 @@ if ($enable_test) {
     if (notify_user($test_user_id, $test_message)) {
         echo "테스트 알림이 성공적으로 추가되었습니다.<br>";
         log_notification($test_user_id); // 최근 알림 로그 확인
+
+        // 테스트: 알림 읽음 처리
+        $notification_id = $conn->lastInsertId();
+        if (update_notification_status($notification_id, true)) {
+            echo "알림 ID {$notification_id}를 읽음 처리했습니다.<br>";
+        }
+
+        // 테스트: 알림 삭제
+        if (delete_notification($notification_id)) {
+            echo "알림 ID {$notification_id}를 삭제했습니다.<br>";
+        }
     } else {
         echo "테스트 알림 추가 실패.<br>";
     }
