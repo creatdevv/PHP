@@ -40,7 +40,7 @@ function notify_user($user_id, $message) {
     }
 
     try {
-        $sql = "INSERT INTO notifications (user_id, message) VALUES (:user_id, :message)";
+        $sql = "INSERT INTO notifications (user_id, message, is_read) VALUES (:user_id, :message, 0)";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':message', $message, PDO::PARAM_STR);
@@ -77,6 +77,35 @@ function notify_users(array $user_ids, $message) {
     return $results;
 }
 
+/**
+ * 사용자 알림 로그 출력 함수
+ *
+ * @param int $user_id 사용자 ID
+ */
+function display_user_notifications($user_id) {
+    global $conn;
+
+    try {
+        $sql = "SELECT * FROM notifications WHERE user_id = :user_id ORDER BY created_at DESC LIMIT 5";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        echo "<h3>사용자 ID {$user_id}의 최근 알림:</h3>";
+        if ($notifications) {
+            foreach ($notifications as $notification) {
+                $status = $notification['is_read'] ? "읽음" : "읽지 않음";
+                echo "<p>메시지: {$notification['message']} (상태: {$status}, 생성일: {$notification['created_at']})</p>";
+            }
+        } else {
+            echo "<p>알림이 없습니다.</p>";
+        }
+    } catch (PDOException $e) {
+        error_log("알림 로그 조회 중 오류: " . $e->getMessage());
+    }
+}
+
 // 테스트 데이터 삽입 여부
 $enable_test = true;
 
@@ -92,6 +121,7 @@ if ($enable_test) {
         echo "<ul>";
         foreach ($results['success'] as $success_id) {
             echo "<li>사용자 ID: $success_id</li>";
+            display_user_notifications($success_id); // 각 사용자 알림 로그 출력
         }
         echo "</ul>";
 
@@ -101,7 +131,6 @@ if ($enable_test) {
             echo "<li>사용자 ID: $failed_id</li>";
         }
         echo "</ul>";
-
     } catch (Exception $e) {
         error_log("테스트 알림 발송 중 오류: " . $e->getMessage());
         echo "테스트 알림 발송 중 오류가 발생했습니다.";
