@@ -1,0 +1,23 @@
+# SQL 데이터베이스 생성 및 테이블 구조
+CREATE DATABASE IF NOT EXISTS chat_db;  -- 데이터베이스 생성
+USE chat_db;
+
+CREATE TABLE IF NOT EXISTS messages (  -- 메시지를 저장할 테이블 생성
+    id INT AUTO_INCREMENT PRIMARY KEY, -- 고유 메시지 ID
+    username VARCHAR(50) NOT NULL,     -- 사용자 이름
+    message TEXT NOT NULL,             -- 메시지 내용
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 생성 시간
+);
+
+# 폴더 및 파일 구조
+chat/
+├── db.php             # 데이터베이스 연결을 처리하는 파일
+├── index.php          # 채팅 화면을 표시하는 메인 파일
+├── post_message.php   # 메시지를 처리하여 데이터베이스에 저장하는 파일
+└── style.css          # 채팅 화면 스타일을 정의한 CSS 파일
+
+# 메모
+- 데이터베이스를 생성하려면 위 SQL 코드를 MySQL 클라이언트 또는 PHPMyAdmin에서 실행하세요.
+- `db.php` 파일은 데이터베이스 연결 정보를 포함하며, 필요에 따라 사용자 이름, 비밀번호를 수정하세요.
+- `index.php`는 채팅 메시지를 표시하며, 실시간 채팅이 아니라 간단한 POST 기반 구현입니다.
+- 추가적인 기능(예: 삭제, 수정 등)을 원하면 `post_message.php`에 로직을 추가하세요.
