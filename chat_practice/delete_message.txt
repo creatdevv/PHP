@@ -1,3 +1,7 @@
 # message 테이블에 user_id 추가
 ALTER TABLE messages ADD COLUMN user_id INT NOT NULL AFTER id;
 
+## 테스트 절차
+사용자 ID가 포함된 메시지를 작성.
+자신이 작성한 메시지 옆에 "삭제" 버튼 확인.
+삭제 버튼 클릭 시, 메시지가 삭제되는지 확인.
