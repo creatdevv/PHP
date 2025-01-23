@@ -34,3 +34,21 @@ $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </body>
 </html>
+
+<?php
+// 메시지 출력 부분
+foreach ($messages as $message) {
+    echo "<div>";
+    echo "<p><strong>" . htmlspecialchars($message['username']) . ":</strong> " . htmlspecialchars($message['message']) . "</p>";
+    echo "<p><small>" . $message['created_at'] . "</small></p>";
+    if ($message['user_id'] === $currentUserId) { // 현재 로그인한 사용자가 작성한 메시지만 삭제 가능
+        echo "<form action='delete_message.php' method='POST' onsubmit='return confirm(\"정말 삭제하시겠습니까?\")'>\n";
+        echo "    <input type='hidden' name='message_id' value='" . $message['id'] . "'>\n";
+        echo "    <input type='hidden' name='user_id' value='" . $currentUserId . "'>\n";
+        echo "    <button type='submit'>삭제</button>\n";
+        echo "</form>\n";
+    }
+    echo "</div>";
+}
+?>
+
