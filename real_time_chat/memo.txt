@@ -1,0 +1,8 @@
+# 폴더 구조
+real_time_chat/
+├── db.php
+├── index.php
+├── post_message.php
+├── fetch_messages.php
+├── style.css
+
