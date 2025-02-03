@@ -1,0 +1,7 @@
+chat/
+├── db.php
+├── index.php        (메인 채팅 화면)
+├── post_message.php (메시지 전송 처리)
+├── get_messages.php (채팅 실시간 갱신)
+├── emoji_list.php   (이모티콘 리스트)
+├── style.css        (CSS 스타일)
