@@ -11,3 +11,10 @@ private_messages.php → 사용자가 받은 쪽지를 확인하는 페이지
 send_private_message.php → 쪽지를 보내는 기능 처리
 get_private_messages.php → 실시간 쪽지 목록을 불러오는 기능
 (수정) db.php → 새로운 테이블 추가 (private_messages)
+
+
+✅ send_private_message.php 설명
+
+POST 요청을 받아서 보낸 사람 ID, 받는 사람 ID, 메시지를 데이터베이스에 저장.
+입력값이 비어 있으면 오류 메시지를 반환.
+성공적으로 저장되면 JSON 응답을 반환.
