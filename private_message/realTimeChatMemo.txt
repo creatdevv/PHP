@@ -18,3 +18,22 @@ real_time_chat/
 - index.php: 메인 채팅 화면 (읽음 확인 기능 포함)
 - style.css: 스타일 적용
 
+# user_id 컬럼 필요하므로 메세지 테이블에 대한 해당 컬럼 생성
+CREATE TABLE IF NOT EXISTS messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    message TEXT NOT NULL,
+    is_read TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+## 사용방법
+1. DB 셋업:
+위의 SQL을 이용해 messages 테이블에 user_id, is_read 컬럼이 포함되어 있는지 확인한다.
+2. 실행:
+index.php에 접속하여 사용자 ID(숫자)와 이름, 메시지를 입력한 후 메시지를 전송한다.
+3초마다 자동으로 메시지를 불러오며, 사용자가 보낸 메시지는 읽음 여부에 따라 “(읽음)” 표시가 나타난다.
+3. 읽음 처리:
+채팅창이 로드될 때, 입력된 사용자 ID를 기준으로 다른 사람이 보낸 메시지들은 자동으로 ‘읽음’ 처리된다.
