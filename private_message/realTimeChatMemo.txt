@@ -1,0 +1,20 @@
+#sql
+ALTER TABLE messages ADD COLUMN is_read TINYINT(1) DEFAULT 0;
+
+# 파일 구성
+real_time_chat/
+├── db.php
+├── index.php
+├── post_message.php
+├── fetch_messages.php
+├── mark_read.php
+└── style.css
+
+>> 설명: 각 파일의 역할
+- db.php: 데이터베이스 연결
+- post_message.php: 사용자가 보낸 메시지를 DB에 저장
+- fetch_messages.php: DB에서 메시지를 불러와 JSON으로 반환
+- mark_read.php: 현재 사용자의 채팅을 열면, 자신이 아닌 다른 사용자가 보낸 메시지를 ‘읽음’ 상태로 업데이트
+- index.php: 메인 채팅 화면 (읽음 확인 기능 포함)
+- style.css: 스타일 적용
+
