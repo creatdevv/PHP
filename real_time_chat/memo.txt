@@ -1,8 +1,10 @@
-# 폴더 구조
 real_time_chat/
 ├── db.php
-├── index.php
+├── register.php
+├── login.php
+├── logout.php
+├── index.php         // (로그인 후 접근할 메인 채팅 페이지)
 ├── post_message.php
 ├── fetch_messages.php
-├── style.css
-
+├── mark_read.php
+└── style.css
